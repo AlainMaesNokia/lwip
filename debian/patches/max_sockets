@@ -300,6 +300,31 @@ Won't get to upstream
  
  /* User posix socket headers */
  #define LWIP_SOCKET_EXTERNAL_HEADERS            1
+--- a/port/include/arch/cc.h
++++ b/port/include/arch/cc.h
+@@ -52,6 +52,13 @@
+ #define IPV6_FRAG_COPYHEADER     1
+ #endif
+ 
++#if defined(LWIP_UNIX_LINUX) || defined(LWIP_UNIX_HURD)
++/*Sockets headers #includes */
++#include <sys/ioctl.h>
++#include <fcntl.h>
++#include <net/if.h>
++#endif
++
+ #define LWIP_TIMEVAL_PRIVATE 0
+ #include <sys/time.h>
+ 
+@@ -73,7 +80,7 @@
+ typedef __kernel_fd_set fd_set;
+ #endif
+ 
+-#if defined(LWIP_UNIX_MACH)
++#if defined(LWIP_UNIX_MACH) || defined(LWIP_UNIX_LINUX) || defined(LWIP_UNIX_HURD)
+ /* sys/types.h and signal.h bring in Darwin byte order macros. pull the
+    header here and disable LwIP's version so that apps still can get
+    the macros via LwIP headers and use system headers */
 --- a/src/include/lwip/if_api.h
 +++ b/src/include/lwip/if_api.h
 @@ -49,7 +49,9 @@
