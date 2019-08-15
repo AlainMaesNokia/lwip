@@ -78,7 +78,7 @@ Not intended to be upstream
 +typedef __kernel_fd_set fd_set;
 +#endif
 +
-+#if defined(LWIP_UNIX_MACH)
++#if defined(LWIP_UNIX_MACH) || defined(LWIP_UNIX_LINUX) || defined(LWIP_UNIX_HURD)
 +/* sys/types.h and signal.h bring in Darwin byte order macros. pull the
 +   header here and disable LwIP's version so that apps still can get
 +   the macros via LwIP headers and use system headers */
@@ -1103,7 +1103,7 @@ Not intended to be upstream
 +)
 --- /dev/null
 +++ b/port/include/posix/inet.h
-@@ -0,0 +1,66 @@
+@@ -0,0 +1,69 @@
 +/*
 +   Copyright (C) 2018 Free Software Foundation, Inc.
 +   Written by Joan Lledó.
@@ -1130,6 +1130,9 @@ Not intended to be upstream
 +#include <netinet/in.h>
 +#include <netinet/tcp.h>
 +#include <netinet/udp.h>
++#include <sys/ioctl.h>
++#include <fcntl.h>
++#include <net/if.h>
 +
 +#ifdef __cplusplus
 +extern "C" {
