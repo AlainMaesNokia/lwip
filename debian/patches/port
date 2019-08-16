@@ -1911,7 +1911,7 @@ Not intended to be upstream
 +/*-----------------------------------------------------------------------------------*/
 --- /dev/null
 +++ b/port/netif/sio.c
-@@ -0,0 +1,488 @@
+@@ -0,0 +1,485 @@
 +/* Author: Magnus Ivarsson <magnus.ivarsson@volvo.com> */
 +
 +/* to get rid of implicit function declarations */
@@ -2045,6 +2045,7 @@ Not intended to be upstream
 +	}
 +
 +#if ! (PPP_SUPPORT || LWIP_HAVE_SLIPIF)
++	memset(&saio, 0, sizeof(struct sigaction));
 +	/* install the signal handler before making the device asynchronous */
 +	switch ( devnum )
 +	{
@@ -2061,10 +2062,6 @@ Not intended to be upstream
 +			break;
 +	}
 +
-+	saio.sa_flags = 0;
-+#if defined(LWIP_UNIX_LINUX)
-+	saio.sa_restorer = NULL;
-+#endif /* LWIP_UNIX_LINUX */
 +	sigaction( SIGIO,&saio,NULL );
 +
 +	/* allow the process to receive SIGIO */
