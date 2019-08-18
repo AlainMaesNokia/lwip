@@ -1,8 +1,5 @@
 lwip (2.1.2-3) UNRELEASED; urgency=medium
 
-  [ Samuel Thibault ]
-  * control: Restrict to linux & hurd for now.
-
   [ Joan Lledó ]
   * debian/patches/patch9350:
     * Remove _HAVE_SA_LEN macros
