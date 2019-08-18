@@ -1,6 +1,29 @@
 lwip (2.1.2-3) UNRELEASED; urgency=medium
 
+  [ Samuel Thibault ]
   * control: Restrict to linux & hurd for now.
+
+  [ Joan Lledó ]
+  * debian/patches/patch9350:
+    * Remove _HAVE_SA_LEN macros
+      * Some macros related to sa_len field were written to this
+        file by mistake
+  * debian/patches/port:
+    * Fix bug on thrad handling
+      * In the Hurd, pthread_cond_timedwait() returns EINTR when
+        the thread has been cancelled
+    * Move some #includes in cc.h from max_sockets to port:
+      * <sys/ioctl.h>
+      * <fcntl.h>
+      * <net/if.h>
+      * <sys/types.h>
+    * Fix build error on some architectures
+      * sio module: memset struct sigaction to 0
+        * Use memset to set all struct sigaction fields to 0
+          instead of doing it field by field, since fields depend
+          on the architecture
+  * debian/patches/max_sockets:
+    * Remove #includes in cc.h moved to port patch
 
  -- Samuel Thibault <sthibault@debian.org>  Sat, 10 Aug 2019 02:44:17 +0200
 

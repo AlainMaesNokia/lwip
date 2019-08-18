@@ -78,7 +78,7 @@ Not intended to be upstream
 +typedef __kernel_fd_set fd_set;
 +#endif
 +
-+#if defined(LWIP_UNIX_MACH)
++#if defined(LWIP_UNIX_MACH) || defined(LWIP_UNIX_LINUX) || defined(LWIP_UNIX_HURD)
 +/* sys/types.h and signal.h bring in Darwin byte order macros. pull the
 +   header here and disable LwIP's version so that apps still can get
 +   the macros via LwIP headers and use system headers */
@@ -852,9 +852,9 @@ Not intended to be upstream
 +  if (ret == ETIMEDOUT) {
 +    return SYS_ARCH_TIMEOUT;
 +#ifdef LWIP_UNIX_HURD
-+    /* On the Hurd, ret == 1 means the RPC has been cancelled.
++    /* On the Hurd, ret == EINTR means the RPC has been cancelled.
 +     * The thread is awakened (not terminated) and execution must continue */
-+  } else if (ret == 1) {
++  } else if (ret == EINTR) {
 +    return SYS_ARCH_INTR;
 +#endif
 +  }
@@ -1103,7 +1103,7 @@ Not intended to be upstream
 +)
 --- /dev/null
 +++ b/port/include/posix/inet.h
-@@ -0,0 +1,66 @@
+@@ -0,0 +1,69 @@
 +/*
 +   Copyright (C) 2018 Free Software Foundation, Inc.
 +   Written by Joan Lledó.
@@ -1130,6 +1130,9 @@ Not intended to be upstream
 +#include <netinet/in.h>
 +#include <netinet/tcp.h>
 +#include <netinet/udp.h>
++#include <sys/ioctl.h>
++#include <fcntl.h>
++#include <net/if.h>
 +
 +#ifdef __cplusplus
 +extern "C" {
@@ -1908,7 +1911,7 @@ Not intended to be upstream
 +/*-----------------------------------------------------------------------------------*/
 --- /dev/null
 +++ b/port/netif/sio.c
-@@ -0,0 +1,488 @@
+@@ -0,0 +1,485 @@
 +/* Author: Magnus Ivarsson <magnus.ivarsson@volvo.com> */
 +
 +/* to get rid of implicit function declarations */
@@ -2042,6 +2045,7 @@ Not intended to be upstream
 +	}
 +
 +#if ! (PPP_SUPPORT || LWIP_HAVE_SLIPIF)
++	memset(&saio, 0, sizeof(struct sigaction));
 +	/* install the signal handler before making the device asynchronous */
 +	switch ( devnum )
 +	{
@@ -2058,10 +2062,6 @@ Not intended to be upstream
 +			break;
 +	}
 +
-+	saio.sa_flags = 0;
-+#if defined(LWIP_UNIX_LINUX)
-+	saio.sa_restorer = NULL;
-+#endif /* LWIP_UNIX_LINUX */
 +	sigaction( SIGIO,&saio,NULL );
 +
 +	/* allow the process to receive SIGIO */
