@@ -1,3 +1,17 @@
+lwip (2.1.2-4) UNRELEASED; urgency=medium
+
+  * Add support for kFreeBSD
+    * debian/patches/cmake:
+      * Remove the OS restriction to Linux and Hurd
+    * debian/patches/port:
+      * Detect kFreeBSD
+      * Disable htons() and pals for kFreeBSD
+      * Declare some socket options when missing:
+        *TCP_KEEPIDLE, TCP_KEEPINTVL and TCP_KEEPCNT
+      * Make kFreeBSD use standard error codes
+
+ -- Joan Lledó <jlledom@member.fsf.org>  Wed, 28 Aug 2019 08:32:24 +0200
+
 lwip (2.1.2-3) unstable; urgency=medium
 
   [ Joan Lledó ]
