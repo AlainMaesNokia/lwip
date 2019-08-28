@@ -1,5 +1,6 @@
-lwip (2.1.2-4) UNRELEASED; urgency=medium
+lwip (2.1.2-4) unstable; urgency=medium
 
+  [ Joan Lledó ]
   * Add support for kFreeBSD
     * debian/patches/cmake:
       * Remove the OS restriction to Linux and Hurd
@@ -10,7 +11,7 @@ lwip (2.1.2-4) UNRELEASED; urgency=medium
         *TCP_KEEPIDLE, TCP_KEEPINTVL and TCP_KEEPCNT
       * Make kFreeBSD use standard error codes
 
- -- Joan Lledó <jlledom@member.fsf.org>  Wed, 28 Aug 2019 08:32:24 +0200
+ -- Samuel Thibault <sthibault@debian.org>  Wed, 28 Aug 2019 09:25:34 +0200
 
 lwip (2.1.2-3) unstable; urgency=medium
 
