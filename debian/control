@@ -1,6 +1,6 @@
 Source: lwip
 Priority: optional
-Maintainer: Samuel Thibault <sthibault@debian.org>
+Maintainer: Joan Lledó <jlledom@member.fsf.org>
 Build-Depends: debhelper (>= 9), dh-autoreconf, cmake
 Standards-Version: 3.9.8
 Section: libs
