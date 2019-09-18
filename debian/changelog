@@ -1,6 +1,7 @@
 lwip (2.1.2-5) UNRELEASED; urgency=medium
 
   * Set Joan Lledó as maintainer.
+  * watch: Generalize pattern.
 
  -- Samuel Thibault <sthibault@debian.org>  Sat, 31 Aug 2019 11:42:29 +0200
 
