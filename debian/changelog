@@ -1,3 +1,10 @@
+lwip (2.1.2-5.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * No-change source-only upload to allow testing migration.
+
+ -- Boyuan Yang <byang@debian.org>  Fri, 04 Oct 2019 13:31:52 -0400
+
 lwip (2.1.2-5) unstable; urgency=medium
 
   [ Samuel Thibault ]
