@@ -1,8 +1,9 @@
-lwip (2.1.2-6) UNRELEASED; urgency=medium
+lwip (2.1.2+dfsg1-1) UNRELEASED; urgency=medium
 
   * Update Standards version to 4.4.1 
+  * Clean lintian error: source-is-missing
 
- -- Joan Lledó <jlledom@member.fsf.org>  Sun, 22 Dec 2019 19:52:24 +0100
+ -- Joan Lledó <jlledom@member.fsf.org>  Mon, 30 Dec 2019 12:00:28 +0100
 
 lwip (2.1.2-5.1) unstable; urgency=medium
 

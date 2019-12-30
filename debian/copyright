@@ -1,6 +1,8 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: lwip
 Source: http://savannah.nongnu.org/projects/lwip/
+Files-Excluded: doc/doxygen/output
+Comment: The orig tarball includes Doxygen-generated docs with minified JS files
 
 Files: *
 Copyright: 1984-2000 Carnegie Mellon University.
