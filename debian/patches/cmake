@@ -131,14 +131,10 @@ Not intended to be upstream
 +    DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -17,4 +17,9 @@
- 
+@@ -18,3 +18,6 @@
  # Target for package generation
  add_custom_target(dist COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
--add_dependencies(dist lwipdocs)
-+if (DOXYGEN_FOUND)
-+	add_dependencies(dist lwipdocs)
-+endif (DOXYGEN_FOUND)
+ add_dependencies(dist lwipdocs)
 +
 +# Build shared library
 +include(${LWIP_DIR}/lib/CMakeLists.txt)
@@ -152,6 +148,15 @@ Not intended to be upstream
  )
  
  # 6LoWPAN
+@@ -257,7 +256,7 @@
+ if (DOXYGEN_FOUND)
+     message("Doxygen build started")
+ 
+-    add_custom_target(lwipdocs
++    add_custom_target(lwipdocs ALL
+         COMMAND ${CMAKE_COMMAND} -E remove_directory ${DOXYGEN_DIR}/${DOXYGEN_OUTPUT_DIR}/html
+         COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+         WORKING_DIRECTORY ${DOXYGEN_DIR}
 --- /dev/null
 +++ b/lib/lwip.pc.in
 @@ -0,0 +1,10 @@
