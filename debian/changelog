@@ -4,6 +4,7 @@ lwip (2.1.2+dfsg1-1) UNRELEASED; urgency=medium
   * Clean lintian error: source-is-missing
     * Repack: remove doxygen documentation from orig
     * Generate doxygen output on build
+  * Clean lintian warnings about copyright
 
  -- Joan Lledó <jlledom@member.fsf.org>  Mon, 30 Dec 2019 12:00:28 +0100
 
