@@ -4,5 +4,5 @@ repacksuffix=+dfsg1,\
 repack,\
 compression=xz,\
 dversionmangle=s/\+(debian|dfsg|ds|deb)(\d+)?$//\
- http://download.savannah.gnu.org/releases/lwip/ lwip-@ANY_VERSION@@ARCHIVE_EXT@
+ https://download.savannah.gnu.org/releases/lwip/ lwip-@ANY_VERSION@@ARCHIVE_EXT@
 
