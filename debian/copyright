@@ -1,6 +1,8 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: lwip
 Source: http://savannah.nongnu.org/projects/lwip/
+Files-Excluded: doc/doxygen/output
+Comment: The orig tarball includes Doxygen-generated docs with minified JS files
 
 Files: *
 Copyright: 1984-2000 Carnegie Mellon University.
@@ -30,6 +32,127 @@ Copyright: 1984-2000 Carnegie Mellon University.
 	   2016 Erik Andersson
 	   2016 Elias Oenal.
 License: BSD-3-Clause
+
+Files: src/netif/ppp/auth.c
+Copyright: 1993-2002 Paul Mackerras.
+           1984-2000 Carnegie Mellon University.
+License: BSD-Like
+
+Files: src/netif/ppp/ccp.c src/include/netif/ppp/ccp.h src/netif/ppp/chap-md5.c src/include/netif/ppp/chap-md5.h src/netif/ppp/chap-new.c src/include/netif/ppp/chap-new.h src/netif/ppp/demand.c src/netif/ppp/multilink.c src/netif/ppp/utils.c
+Copyright: 1994-2003 Paul Mackerras
+License: BSD-Like
+
+Files: src/include/netif/ppp/chap_ms.h src/netif/ppp/chap_ms.c src/netif/ppp/pppcrypt.c src/include/netif/ppp/pppcrypt.h
+Copyright: 1995 Eric Rosenquist.
+License: BSD-3-Clause
+
+Files: src/netif/ppp/eap.c src/include/netif/ppp/eap.h
+Copyright: 2001 by Sun Microsystems, Inc.
+License: BSD-Like
+
+Files: src/netif/ppp/ecp.c
+Copyright: 2002 Google, Inc.
+           1994-2002 Paul Mackerras. All rights reserved.
+License: BSD-3-clause
+
+Files: src/include/netif/ppp/ecp.h
+Copyright: 2002 Google, Inc.
+           1994-2002 Paul Mackerras. All rights reserved.
+License: BSD-3-Clause
+
+Files: src/netif/ppp/eui64.c src/include/netif/ppp/eui64.h
+Copyright: 1999 Tommi Komulainen.
+License: BSD-3-Clause-Attribution
+
+Files: src/netif/ppp/fsm.c src/include/netif/ppp/fsm.h src/netif/ppp/ipcp.c src/include/netif/ppp/ipcp.h src/netif/ppp/lcp.c src/include/netif/ppp/lcp.h src/netif/ppp/upap.c src/include/netif/ppp/upap.h
+Copyright: 1984-2000 Carnegie Mellon University.
+License: BSD-3-Clause-Attribution
+
+Files: src/netif/ppp/ipv6cp.c src/include/netif/ppp/ipv6cp.h
+Copyright: 1999 Tommi Komulainen.
+           1995-1999 Francis.Dupont@inria.fr, INRIA Rocquencourt, Alain.Durand@imag.fr, IMAG, Jean-Luc.Richier@imag.fr, IMAG-LSR.
+           1984-2000 Carnegie Mellon University. All rights reserved.
+License: BSD-3-Clause-Attribution
+
+Files: src/netif/ppp/magic.c src/include/netif/ppp/magic.h
+Copyright: 1984-2000 Carnegie Mellon University. All rights reserved.
+           2003 by Marc Boucher, Services Informatiques (MBSI) inc.
+	   1998 by Global Election Systems Inc.
+License: BSD-3-Clause-Attribution
+
+Files: src/netif/ppp/mppe.c
+Copyright: 2002,2003,2004 Google, Inc.
+License: ISC
+ Permission to use, copy, modify, and distribute this software and its
+ documentation is hereby granted, provided that the above copyright
+ notice appears in all copies.  This software is provided without any
+ warranty, express or implied.
+
+Files: src/include/netif/ppp/mppe.h
+Copyright: 2008 Paul Mackerras.
+License: BSD-3-Clause-Attribution
+
+Files: src/netif/ppp/ppp.c
+Copyright: 2003 by Marc Boucher, Services Informatiques (MBSI) inc.
+           1997 by Global Election Systems Inc.
+	   1994 The Australian National University.
+	   1989 Carnegie Mellon University.
+License: BSD-Like
+
+Files: src/include/netif/ppp/ppp.h src/include/netif/ppp/ppp_impl.h src/include/netif/ppp/pppdebug.h
+Copyright: 2003, 2006 by Marc Boucher, Services Informatiques (MBSI) inc.
+           1997 Global Election Systems Inc.
+           2001 by Cognizant Pty Ltd.
+License: BSD-Like
+
+Files: src/netif/ppp/pppoe.c src/include/netif/ppp/pppoe.h
+Copyright: 2006 by Marc Boucher, Services Informatiques (MBSI) inc.
+           2002 The NetBSD Foundation, Inc.
+License: BSD-Like
+
+Files: src/netif/ppp/vj.c src/include/netif/ppp/vj.h
+Copyright: 1989 Regents of the University of California.
+License: Prior-BSD
+ Redistribution and use in source and binary forms are permitted
+ provided that the above copyright notice and this paragraph are
+ duplicated in all such forms and that any documentation,
+ advertising materials, and other materials related to such
+ distribution and use acknowledge that the software was developed
+ by the University of California, Berkeley.  The name of the
+ University may not be used to endorse or promote products derived
+ from this software without specific prior written permission.
+ THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+ IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+ WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+Comment: https://en.wikipedia.org/wiki/BSD_licenses#Previous_license
+
+Files: lib/CMakeLists.txt
+Copyright: 2019 Joan Lledó <jlledom@member.fsf.org>
+License: GPL-2+
+
+Files: debian/*
+Copyright: 2017-2018 Samuel Thibault <sthibault@debian.org>,
+           2017-2020 Joan Lledó <jlledom@member.fsf.org>
+License: GPL-2+
+
+License: GPL-2+
+ This package is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+ .
+ This package is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program. If not, see <https://www.gnu.org/licenses/>
+ .
+ On Debian systems, the complete text of the GNU General
+ Public License version 2 can be found in "/usr/share/common-licenses/GPL-2".
+
+License: BSD-3-Clause
  Redistribution and use in source and binary forms, with or without modification,
  are permitted provided that the following conditions are met:
  .
@@ -52,104 +175,7 @@ License: BSD-3-Clause
  IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
  OF SUCH DAMAGE.
 
-Files: src/netif/ppp/auth.c
-Copyright: 1993-2002 Paul Mackerras.
-           1984-2000 Carnegie Mellon University.
-License: BSD
- Redistribution and use in source and binary forms, with or without
- modification, are permitted provided that the following conditions
- are met:
- .
- 1. Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
- .
- 2. The name(s) of the authors of this software must not be used to
-    endorse or promote products derived from this software without
-    prior written permission.
- .
- 3. Redistributions of any form whatsoever must retain the following
-    acknowledgment:
-    "This product includes software developed by Paul Mackerras
-     <paulus@samba.org>".
- .
- THE AUTHORS OF THIS SOFTWARE DISCLAIM ALL WARRANTIES WITH REGARD TO
- THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
- AND FITNESS, IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY
- SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
- AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
- OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
- .
- Derived from main.c, which is:
- .
- Copyright (c) 1984-2000 Carnegie Mellon University. All rights reserved.
- .
- Redistribution and use in source and binary forms, with or without
- modification, are permitted provided that the following conditions
- are met:
- .
- 1. Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
- .
- 2. Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in
-    the documentation and/or other materials provided with the
-    distribution.
- .
- 3. The name "Carnegie Mellon University" must not be used to
-    endorse or promote products derived from this software without
-    prior written permission. For permission or any legal
-    details, please contact
-      Office of Technology Transfer
-      Carnegie Mellon University
-      5000 Forbes Avenue
-      Pittsburgh, PA  15213-3890
-      (412) 268-4387, fax: (412) 268-7395
-      tech-transfer@andrew.cmu.edu
- .
- 4. Redistributions of any form whatsoever must retain the following
-    acknowledgment:
-    "This product includes software developed by Computing Services
-     at Carnegie Mellon University (http://www.cmu.edu/computing/)."
- .
- CARNEGIE MELLON UNIVERSITY DISCLAIMS ALL WARRANTIES WITH REGARD TO
- THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
- AND FITNESS, IN NO EVENT SHALL CARNEGIE MELLON UNIVERSITY BE LIABLE
- FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
- AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
- OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-Files: src/netif/ppp/ccp.c src/include/netif/ppp/ccp.h src/netif/ppp/chap-md5.c src/include/netif/ppp/chap-md5.h src/netif/ppp/chap-new.c src/include/netif/ppp/chap-new.h src/netif/ppp/demand.c src/netif/ppp/multilink.c src/netif/ppp/utils.c
-Copyright: 1994-2003 Paul Mackerras
-License: BSD
- Redistribution and use in source and binary forms, with or without
- modification, are permitted provided that the following conditions
- are met:
- .
- 1. Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
- .
- 2. The name(s) of the authors of this software must not be used to
-    endorse or promote products derived from this software without
-    prior written permission.
- .
- 3. Redistributions of any form whatsoever must retain the following
-    acknowledgment:
-    "This product includes software developed by Paul Mackerras
-     <paulus@samba.org>".
- .
- THE AUTHORS OF THIS SOFTWARE DISCLAIM ALL WARRANTIES WITH REGARD TO
- THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
- AND FITNESS, IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY
- SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
- AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
- OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-Files: src/include/netif/ppp/chap_ms.h src/include/netif/ppp/chap_ms.c src/netif/ppp/pppcrypt.c src/include/netif/ppp/pppcrypt.h
-Copyright: 1995 Eric Rosenquist.
-License: BSD-3-Clause
+License: BSD-3-Clause-Attribution
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
  are met:
@@ -166,6 +192,11 @@ License: BSD-3-Clause
     endorse or promote products derived from this software without
     prior written permission.
  .
+ 4. Redistributions of any form whatsoever must retain the following
+    acknowledgment:
+    "This product includes software developed by Tommi Komulainen
+     <Tommi.Komulainen@iki.fi>".
+ .
  THE AUTHORS OF THIS SOFTWARE DISCLAIM ALL WARRANTIES WITH REGARD TO
  THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
  AND FITNESS, IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY
@@ -173,10 +204,35 @@ License: BSD-3-Clause
  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
  AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
  OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Comment: https://spdx.org/licenses/BSD-3-Clause-Attribution
 
-Files: src/netif/ppp/eap.c src/include/netif/ppp/eap.h
-Copyright: 2001 by Sun Microsystems, Inc.
-License: BSD
+License: BSD-Like
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+ .
+ 1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+ .
+ 2. The name(s) of the authors of this software must not be used to
+   endorse or promote products derived from this software without
+   prior written permission.
+ .
+ 3. Redistributions of any form whatsoever must retain the following
+   acknowledgment:
+   "This product includes software developed by Paul Mackerras
+    <paulus@samba.org>".
+ .
+ THE AUTHORS OF THIS SOFTWARE DISCLAIM ALL WARRANTIES WITH REGARD TO
+ THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+ AND FITNESS, IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY
+ SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
+ AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
+ OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ .
+ --------------
+ .
  Non-exclusive rights to redistribute, modify, translate, and use
  this software in source and binary forms, in whole or in part, is
  hereby granted, provided that the above copyright notice is
@@ -187,328 +243,8 @@ License: BSD
  THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
  IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
  WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-
-Files: src/netif/ppp/ecp.c
-Copyright: 2002 Google, Inc.
-           1994-2002 Paul Mackerras. All rights reserved.
-License: BSD
- Redistribution and use in source and binary forms, with or without
- modification, are permitted provided that the following conditions
- are met:
  .
- 1. Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
- .
- 2. Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in
-    the documentation and/or other materials provided with the
-    distribution.
- .
- 3. The name(s) of the authors of this software must not be used to
-    endorse or promote products derived from this software without
-    prior written permission.
- .
- THE AUTHORS OF THIS SOFTWARE DISCLAIM ALL WARRANTIES WITH REGARD TO
- THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
- AND FITNESS, IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY
- SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
- AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
- OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
- .
- Derived from ccp.c, which is:
- .
- Redistribution and use in source and binary forms, with or without
- modification, are permitted provided that the following conditions
- are met:
- .
- 1. Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
- .
- 2. The name(s) of the authors of this software must not be used to
-    endorse or promote products derived from this software without
-    prior written permission.
- .
- 3. Redistributions of any form whatsoever must retain the following
-    acknowledgment:
-    "This product includes software developed by Paul Mackerras
-     <paulus@samba.org>".
- .
- THE AUTHORS OF THIS SOFTWARE DISCLAIM ALL WARRANTIES WITH REGARD TO
- THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
- AND FITNESS, IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY
- SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
- AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
- OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-Files: src/include/netif/ppp/ecp.h
-Copyright: 2002 Google, Inc.
-           1994-2002 Paul Mackerras. All rights reserved.
-License: BSD-3-Clause
- Redistribution and use in source and binary forms, with or without
- modification, are permitted provided that the following conditions
- are met:
- .
- 1. Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
- .
- 2. Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in
-    the documentation and/or other materials provided with the
-    distribution.
- .
- 3. The name(s) of the authors of this software must not be used to
-    endorse or promote products derived from this software without
-    prior written permission.
- .
- THE AUTHORS OF THIS SOFTWARE DISCLAIM ALL WARRANTIES WITH REGARD TO
- THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
- AND FITNESS, IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY
- SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
- AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
- OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-Files: src/netif/ppp/eui64.c src/include/netif/ppp/eui64.h
-Copyright: 1999 Tommi Komulainen.
-License: BSD-4-Clause
- Redistribution and use in source and binary forms, with or without
- modification, are permitted provided that the following conditions
- are met:
- .
- 1. Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
- .
- 2. Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in
-    the documentation and/or other materials provided with the
-    distribution.
- .
- 3. The name(s) of the authors of this software must not be used to
-    endorse or promote products derived from this software without
-    prior written permission.
- .
- 4. Redistributions of any form whatsoever must retain the following
-    acknowledgment:
-    "This product includes software developed by Tommi Komulainen
-     <Tommi.Komulainen@iki.fi>".
- .
- THE AUTHORS OF THIS SOFTWARE DISCLAIM ALL WARRANTIES WITH REGARD TO
- THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
- AND FITNESS, IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY
- SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
- AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
- OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-Files: src/netif/ppp/fsm.c src/include/netif/ppp/fsm.h src/netif/ppp/ipcp.c src/include/netif/ppp/ipcp.h src/netif/ppp/lcp.c src/include/netif/ppp/lcp.h src/netif/ppp/upap.c src/include/netif/ppp/upap.h
-Copyright: 1984-2000 Carnegie Mellon University.
-License: BSD-4-Clause
- Redistribution and use in source and binary forms, with or without
- modification, are permitted provided that the following conditions
- are met:
- .
- 1. Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
- .
- 2. Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in
-    the documentation and/or other materials provided with the
-    distribution.
- .
- 3. The name "Carnegie Mellon University" must not be used to
-    endorse or promote products derived from this software without
-    prior written permission. For permission or any legal
-    details, please contact
-      Office of Technology Transfer
-      Carnegie Mellon University
-      5000 Forbes Avenue
-      Pittsburgh, PA  15213-3890
-      (412) 268-4387, fax: (412) 268-7395
-      tech-transfer@andrew.cmu.edu
- .
- 4. Redistributions of any form whatsoever must retain the following
-    acknowledgment:
-    "This product includes software developed by Computing Services
-     at Carnegie Mellon University (http://www.cmu.edu/computing/)."
- .
- CARNEGIE MELLON UNIVERSITY DISCLAIMS ALL WARRANTIES WITH REGARD TO
- THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
- AND FITNESS, IN NO EVENT SHALL CARNEGIE MELLON UNIVERSITY BE LIABLE
- FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
- AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
- OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-Files: src/netif/ppp/ipv6cp.c src/include/netif/ppp/ipv6cp.h
-Copyright: 1999 Tommi Komulainen.
-           1995-1999 Francis.Dupont@inria.fr, INRIA Rocquencourt, Alain.Durand@imag.fr, IMAG, Jean-Luc.Richier@imag.fr, IMAG-LSR.
-           1984-2000 Carnegie Mellon University. All rights reserved.
-License: BSD-4-Clause
- Redistribution and use in source and binary forms, with or without
- modification, are permitted provided that the following conditions
- are met:
- .
- 1. Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
- .
- 2. Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in
-    the documentation and/or other materials provided with the
-    distribution.
- .
- 3. The name(s) of the authors of this software must not be used to
-    endorse or promote products derived from this software without
-    prior written permission.
- .
- 4. Redistributions of any form whatsoever must retain the following
-    acknowledgment:
-    "This product includes software developed by Tommi Komulainen
-     <Tommi.Komulainen@iki.fi>".
- .
- THE AUTHORS OF THIS SOFTWARE DISCLAIM ALL WARRANTIES WITH REGARD TO
- THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
- AND FITNESS, IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY
- SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
- AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
- OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
- .
- Original version, based on RFC2023 :
- .
- Copyright (c) 1995, 1996, 1997 Francis.Dupont@inria.fr, INRIA Rocquencourt,
- Alain.Durand@imag.fr, IMAG,
- Jean-Luc.Richier@imag.fr, IMAG-LSR.
- .
- Copyright (c) 1998, 1999 Francis.Dupont@inria.fr, GIE DYADE,
- Alain.Durand@imag.fr, IMAG,
- Jean-Luc.Richier@imag.fr, IMAG-LSR.
- .
- Ce travail a été fait au sein du GIE DYADE (Groupement d'Intérêt
- Économique ayant pour membres BULL S.A. et l'INRIA).
- .
- Ce logiciel informatique est disponible aux conditions
- usuelles dans la recherche, c'est-à-dire qu'il peut
- être utilisé, copié, modifié, distribué à l'unique
- condition que ce texte soit conservé afin que
- l'origine de ce logiciel soit reconnue.
- .
- Le nom de l'Institut National de Recherche en Informatique
- et en Automatique (INRIA), de l'IMAG, ou d'une personne morale
- ou physique ayant participé à l'élaboration de ce logiciel ne peut
- être utilisé sans son accord préalable explicite.
- .
- Ce logiciel est fourni tel quel sans aucune garantie,
- support ou responsabilité d'aucune sorte.
- Ce logiciel est dérivé de sources d'origine
- "University of California at Berkeley" et
- "Digital Equipment Corporation" couvertes par des copyrights.
- .
- L'Institut d'Informatique et de Mathématiques Appliquées de Grenoble (IMAG)
- est une fédération d'unités mixtes de recherche du CNRS, de l'Institut National
- Polytechnique de Grenoble et de l'Université Joseph Fourier regroupant
- sept laboratoires dont le laboratoire Logiciels, Systèmes, Réseaux (LSR).
- .
- This work has been done in the context of GIE DYADE (joint R & D venture
- between BULL S.A. and INRIA).
- .
- This software is available with usual "research" terms
- with the aim of retain credits of the software. 
- Permission to use, copy, modify and distribute this software for any
- purpose and without fee is hereby granted, provided that the above
- copyright notice and this permission notice appear in all copies,
- and the name of INRIA, IMAG, or any contributor not be used in advertising
- or publicity pertaining to this material without the prior explicit
- permission. The software is provided "as is" without any
- warranties, support or liabilities of any kind.
- This software is derived from source code from
- "University of California at Berkeley" and
- "Digital Equipment Corporation" protected by copyrights.
- .
- Grenoble's Institute of Computer Science and Applied Mathematics (IMAG)
- is a federation of seven research units funded by the CNRS, National
- Polytechnic Institute of Grenoble and University Joseph Fourier.
- The research unit in Software, Systems, Networks (LSR) is member of IMAG.
- .
- Derived from :
- .
- Redistribution and use in source and binary forms, with or without
- modification, are permitted provided that the following conditions
- are met:
- .
- 1. Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
- .
- 2. Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in
-    the documentation and/or other materials provided with the
-    distribution.
- .
- 3. The name "Carnegie Mellon University" must not be used to
-    endorse or promote products derived from this software without
-    prior written permission. For permission or any legal
-    details, please contact
-      Office of Technology Transfer
-      Carnegie Mellon University
-      5000 Forbes Avenue
-      Pittsburgh, PA  15213-3890
-      (412) 268-4387, fax: (412) 268-7395
-      tech-transfer@andrew.cmu.edu
- .
- 4. Redistributions of any form whatsoever must retain the following
-    acknowledgment:
-    "This product includes software developed by Computing Services
-     at Carnegie Mellon University (http://www.cmu.edu/computing/)."
- .
- CARNEGIE MELLON UNIVERSITY DISCLAIMS ALL WARRANTIES WITH REGARD TO
- THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
- AND FITNESS, IN NO EVENT SHALL CARNEGIE MELLON UNIVERSITY BE LIABLE
- FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
- AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
- OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-Files: src/netif/ppp/magic.c src/include/netif/ppp/magic.h
-Copyright: 1984-2000 Carnegie Mellon University. All rights reserved.
-           2003 by Marc Boucher, Services Informatiques (MBSI) inc.
-	   1998 by Global Election Systems Inc.
-License: BSD-4-Clause
- Redistribution and use in source and binary forms, with or without
- modification, are permitted provided that the following conditions
- are met:
- .
- 1. Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
- .
- 2. Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in
-    the documentation and/or other materials provided with the
-    distribution.
- .
- 3. The name "Carnegie Mellon University" must not be used to
-    endorse or promote products derived from this software without
-    prior written permission. For permission or any legal
-    details, please contact
-      Office of Technology Transfer
-      Carnegie Mellon University
-      5000 Forbes Avenue
-      Pittsburgh, PA  15213-3890
-      (412) 268-4387, fax: (412) 268-7395
-      tech-transfer@andrew.cmu.edu
- .
- 4. Redistributions of any form whatsoever must retain the following
-    acknowledgment:
-    "This product includes software developed by Computing Services
-     at Carnegie Mellon University (http://www.cmu.edu/computing/)."
- .
- CARNEGIE MELLON UNIVERSITY DISCLAIMS ALL WARRANTIES WITH REGARD TO
- THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
- AND FITNESS, IN NO EVENT SHALL CARNEGIE MELLON UNIVERSITY BE LIABLE
- FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
- AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
- OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ -------------
  .
  The authors hereby grant permission to use, copy, modify, distribute,
  and license this software and its documentation for any purpose, provided
@@ -527,70 +263,8 @@ License: BSD-4-Clause
  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-Files: src/netif/ppp/mppe.c
-Copyright: 2002,2003,2004 Google, Inc.
-License: ISC
- Permission to use, copy, modify, and distribute this software and its
- documentation is hereby granted, provided that the above copyright
- notice appears in all copies.  This software is provided without any
- warranty, express or implied.
-
-Files: src/include/netif/ppp/mppe.h
-Copyright: 2008 Paul Mackerras.
-License: BSD-4-Clause
- Redistribution and use in source and binary forms, with or without
- modification, are permitted provided that the following conditions
- are met:
  .
- 1. Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
- .
- 2. Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in
-    the documentation and/or other materials provided with the
-    distribution.
- .
- 3. The name(s) of the authors of this software must not be used to
-    endorse or promote products derived from this software without
-    prior written permission.
- .
- 4. Redistributions of any form whatsoever must retain the following
-    acknowledgment:
-    "This product includes software developed by Paul Mackerras
-     <paulus@samba.org>".
- .
- THE AUTHORS OF THIS SOFTWARE DISCLAIM ALL WARRANTIES WITH REGARD TO
- THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
- AND FITNESS, IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY
- SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
- AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
- OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-Files: src/netif/ppp/ppp.c
-Copyright: 2003 by Marc Boucher, Services Informatiques (MBSI) inc.
-           1997 by Global Election Systems Inc.
-	   1994 The Australian National University.
-	   1989 Carnegie Mellon University.
-License: BSD
- The authors hereby grant permission to use, copy, modify, distribute,
- and license this software and its documentation for any purpose, provided
- that existing copyright notices are retained in all copies and that this
- notice and the following disclaimer are included verbatim in any
- distributions. No written agreement, license, or royalty fee is required
- for any of the authorized uses.
- .
- THIS SOFTWARE IS PROVIDED BY THE CONTRIBUTORS *AS IS* AND ANY EXPRESS OR
- IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- IN NO EVENT SHALL THE CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ -------------
  .
  Permission to use, copy, modify, and distribute this software and its
  documentation is hereby granted, provided that the above copyright
@@ -623,134 +297,7 @@ License: BSD
  THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
  IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-
-Files: src/include/netif/ppp/ppp.h src/include/netif/ppp/ppp_impl.h src/include/netif/ppp/pppdebug.h
-Copyright: 2003, 2006 by Marc Boucher, Services Informatiques (MBSI) inc.
-           1997 Global Election Systems Inc.
-	   2001 by Cognizant Pty Ltd.
-License: BSD
- The authors hereby grant permission to use, copy, modify, distribute,
- and license this software and its documentation for any purpose, provided
- that existing copyright notices are retained in all copies and that this
- notice and the following disclaimer are included verbatim in any 
- distributions. No written agreement, license, or royalty fee is required
- for any of the authorized uses.
- .
- THIS SOFTWARE IS PROVIDED BY THE CONTRIBUTORS *AS IS* AND ANY EXPRESS OR
- IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
- IN NO EVENT SHALL THE CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-Files: src/netif/ppp/pppoe.c src/include/netif/ppp/pppoe.h
-Copyright: 2006 by Marc Boucher, Services Informatiques (MBSI) inc.
-           2002 The NetBSD Foundation, Inc.
-License: BSD
- The authors hereby grant permission to use, copy, modify, distribute,
- and license this software and its documentation for any purpose, provided
- that existing copyright notices are retained in all copies and that this
- notice and the following disclaimer are included verbatim in any 
- distributions. No written agreement, license, or royalty fee is required
- for any of the authorized uses.
- .
- THIS SOFTWARE IS PROVIDED BY THE CONTRIBUTORS *AS IS* AND ANY EXPRESS OR
- IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
- IN NO EVENT SHALL THE CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- .
- This code is derived from software contributed to The NetBSD Foundation
- by Martin Husemann <martin@NetBSD.org>.
- .
- Redistribution and use in source and binary forms, with or without
- modification, are permitted provided that the following conditions
- are met:
- 1. Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
- 2. Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in the
-    documentation and/or other materials provided with the distribution.
- 3. All advertising materials mentioning features or use of this software
-    must display the following acknowledgement:
-        This product includes software developed by the NetBSD
-        Foundation, Inc. and its contributors.
- 4. Neither the name of The NetBSD Foundation nor the names of its
-    contributors may be used to endorse or promote products derived
-    from this software without specific prior written permission.
- .
- THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
- ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
- TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE FOUNDATION OR CONTRIBUTORS
- BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- POSSIBILITY OF SUCH DAMAGE.
-
-Files: src/netif/ppp/vj.c src/include/netif/ppp/vj.h
-Copyright: 1989 Regents of the University of California.
-License: BSD
- Redistribution and use in source and binary forms are permitted
- provided that the above copyright notice and this paragraph are
- duplicated in all such forms and that any documentation,
- advertising materials, and other materials related to such
- distribution and use acknowledge that the software was developed
- by the University of California, Berkeley.  The name of the
- University may not be used to endorse or promote products derived
- from this software without specific prior written permission.
- THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
- IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
- WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-
-Files: Makefile.am configure.ac
-Copyright: 2017 Free Software Foundation, Inc.
-License: GPL
- The GNU Hurd is free software; you can redistribute it and/or
- modify it under the terms of the GNU General Public License as
- published by the Free Software Foundation; either version 2, or (at
- your option) any later version.
- .
- The GNU Hurd is distributed in the hope that it will be useful, but
- WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- General Public License for more details.
- .
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111, USA.
- .
- On Debian systems, the complete text of the GNU General
- Public License version 2 can be found in "/usr/share/common-licenses/GPL-2".
-
-Files: debian/*
-Copyright: 2017-2018 Samuel Thibault <sthibault@debian.org>,
-           2017-2018 Joan Lledó <joanlluislledo@gmail.com>
-License: GPL-2+
- This package is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
- .
- This package is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- .
- You should have received a copy of the GNU General Public License
- along with this program. If not, see <https://www.gnu.org/licenses/>
- .
- On Debian systems, the complete text of the GNU General
- Public License version 2 can be found in "/usr/share/common-licenses/GPL-2".
+Comment:
+ Some ppp files follow different BSD-Like custom licenses. To avoid lintian
+ warnings, all these licenses are listed here under the short name "BSD-Like".
+ Please refer to the code to know which license follows each file.
