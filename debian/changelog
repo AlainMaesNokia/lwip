@@ -6,6 +6,7 @@ lwip (2.1.2+dfsg1-1) UNRELEASED; urgency=medium
     * Generate doxygen output on build
   * Clean lintian warnings about copyright
   * Clean minor lintian messages
+  * Add upstream signing key for uscan verification
 
  -- Joan Lledó <jlledom@member.fsf.org>  Mon, 30 Dec 2019 12:00:28 +0100
 
