@@ -1,3 +1,10 @@
+lwip (2.1.2+dfsg1-3) unstable; urgency=medium
+
+  * No-change source-only upload to allow testing migration.
+  * Include orig tarball
+
+ -- Joan Lledó <jlledom@member.fsf.org>  Sun, 26 Jan 2020 12:36:10 +0100
+
 lwip (2.1.2+dfsg1-2) unstable; urgency=medium
 
   * No-change source-only upload to allow testing migration.
