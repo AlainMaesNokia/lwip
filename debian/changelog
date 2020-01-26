@@ -1,3 +1,9 @@
+lwip (2.1.2+dfsg1-2) unstable; urgency=medium
+
+  * No-change source-only upload to allow testing migration.
+
+ -- Joan Lledó <jlledom@member.fsf.org>  Sun, 26 Jan 2020 10:53:32 +0100
+
 lwip (2.1.2+dfsg1-1) unstable; urgency=medium
 
   * Update Standards version to 4.4.1
