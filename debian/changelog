@@ -1,3 +1,12 @@
+lwip (2.1.2+dfsg1-4) unstable; urgency=medium
+
+  * No-change source-only upload to allow testing migration.
+  * The two previous uploads were rejected due to misunderstandings
+    about the orig tarball (my bad). This source-only upload uses the
+    tarball already uploaded, which has not changed since 2.1.2+dfsg1-1
+
+ -- Joan Lledó <jlledom@member.fsf.org>  Sun, 26 Jan 2020 14:23:06 +0100
+
 lwip (2.1.2+dfsg1-3) unstable; urgency=medium
 
   * No-change source-only upload to allow testing migration.
