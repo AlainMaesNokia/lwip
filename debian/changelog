@@ -1,3 +1,9 @@
+lwip (2.1.2+dfsg1-6) unstable; urgency=medium
+
+  * No-change source-only upload to allow testing migration.
+
+ -- Joan Lledó <jlledom@member.fsf.org>  Sun, 08 Mar 2020 10:56:53 +0100
+
 lwip (2.1.2+dfsg1-5) unstable; urgency=medium
 
   * Fix CVE-2020-8597
