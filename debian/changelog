@@ -1,3 +1,9 @@
+lwip (2.0.3-3+deb10u1) UNRELEASED; urgency=high
+
+  * Fix CVE-2020-8597
+
+ -- Joan Lledó <jlledom@member.fsf.org>  Sat, 14 Mar 2020 10:10:42 +0100
+
 lwip (2.0.3-3) unstable; urgency=medium
 
   [ Samuel Thibault ]
