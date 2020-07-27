@@ -8,29 +8,29 @@ Files: *
 Copyright: 1984-2000 Carnegie Mellon University.
            1989 Regents of the University of California.
            1993-2003, 2008 Paul Mackerras.
-	   1994 The Australian National University.
-	   1995 Eric Rosenquist.  
-	   1995-1999 Francis.Dupont@inria.fr, INRIA Rocquencourt
-	   1997-1998 Global Election Systems Inc.
-	   1999 Tommi Komulainen.
-	   2001-2004 Leon Woestenberg <leon.woestenberg@gmx.net>
+           1994 The Australian National University.
+           1995 Eric Rosenquist.  
+           1995-1999 Francis.Dupont@inria.fr, INRIA Rocquencourt
+           1997-1998 Global Election Systems Inc.
+           1999 Tommi Komulainen.
+           2001-2004 Leon Woestenberg <leon.woestenberg@gmx.net>
            2001-2004 Swedish Institute of Computer Science.
-	   2001-2006 Axon Digital Design B.V., The Netherlands.
-	   2002 The NetBSD Foundation, Inc.
-	   2002 Google, Inc.
-	   2002 CITEL Technologies Ltd.
-	   2002-2003, Adam Dunkels.
-	   2006-2008  Christophe Devine
-	   2007 Dominik Spies <kontakt@dspies.de>
-	   2007-2009 Frédéric Bernon, Simon Goldschmidt
-	   2009 Paul Bakker <polarssl_maintainer at polarssl dot org>
+           2001-2006 Axon Digital Design B.V., The Netherlands.
+           2002 The NetBSD Foundation, Inc.
+           2002 Google, Inc.
+           2002 CITEL Technologies Ltd.
+           2002-2003, Adam Dunkels.
+           2006-2008  Christophe Devine
+           2007 Dominik Spies <kontakt@dspies.de>
+           2007-2009 Frédéric Bernon, Simon Goldschmidt
+           2009 Paul Bakker <polarssl_maintainer at polarssl dot org>
            2010, 2015 Inico Technologies Ltd.
-	   2013 Deltatee Enterprises Ltd.
-	   2014 Simon Goldschmidt
-	   2015 Verisure Innovation AB
-	   2015 Dirk Ziegelmeier
-	   2016 Erik Andersson
-	   2016 Elias Oenal.
+           2013 Deltatee Enterprises Ltd.
+           2014 Simon Goldschmidt
+           2015 Verisure Innovation AB
+           2015 Dirk Ziegelmeier
+           2016 Erik Andersson
+           2016 Elias Oenal.
 License: BSD-3-Clause
 
 Files: src/netif/ppp/auth.c
@@ -77,7 +77,7 @@ License: BSD-3-Clause-Attribution
 Files: src/netif/ppp/magic.c src/include/netif/ppp/magic.h
 Copyright: 1984-2000 Carnegie Mellon University. All rights reserved.
            2003 by Marc Boucher, Services Informatiques (MBSI) inc.
-	   1998 by Global Election Systems Inc.
+           1998 by Global Election Systems Inc.
 License: BSD-3-Clause-Attribution
 
 Files: src/netif/ppp/mppe.c
@@ -95,8 +95,8 @@ License: BSD-3-Clause-Attribution
 Files: src/netif/ppp/ppp.c
 Copyright: 2003 by Marc Boucher, Services Informatiques (MBSI) inc.
            1997 by Global Election Systems Inc.
-	   1994 The Australian National University.
-	   1989 Carnegie Mellon University.
+           1994 The Australian National University.
+           1989 Carnegie Mellon University.
 License: BSD-Like
 
 Files: src/include/netif/ppp/ppp.h src/include/netif/ppp/ppp_impl.h src/include/netif/ppp/pppdebug.h
