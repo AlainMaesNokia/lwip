@@ -6,7 +6,7 @@ Standards-Version: 4.4.1
 Section: libs
 Homepage: https://savannah.nongnu.org/projects/lwip/
 Vcs-Git: https://salsa.debian.org/debian/lwip.git
-Vcs-Browser: https://salsa.debian.org/debian/lwip.git
+Vcs-Browser: https://salsa.debian.org/debian/lwip
 
 Package: liblwip-dev
 Section: libdevel
