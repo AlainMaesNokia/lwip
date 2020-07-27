@@ -1,7 +1,7 @@
 Source: lwip
 Priority: optional
 Maintainer: Joan Lledó <jlledom@member.fsf.org>
-Build-Depends: debhelper (>= 12), cmake, doxygen
+Build-Depends: debhelper-compat (= 12), cmake, doxygen
 Standards-Version: 4.4.1
 Section: libs
 Homepage: https://savannah.nongnu.org/projects/lwip/
