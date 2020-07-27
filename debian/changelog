@@ -3,6 +3,7 @@ lwip (2.1.2+dfsg1-7) UNRELEASED; urgency=low
   * debian/copyright: use spaces rather than tabs to start continuation lines.
   * Set debhelper-compat version in Build-Depends.
   * Use canonical URL in Vcs-Browser.
+  * Update standards version to 4.5.0, no changes needed.
 
  -- Debian Janitor <janitor@jelmer.uk>  Mon, 27 Jul 2020 09:04:06 -0000
 
