@@ -1,3 +1,9 @@
+lwip (2.1.2+dfsg1-8) unstable; urgency=medium
+
+  * No-change source-only upload to allow testing migration.
+
+ -- Joan Lledó <jlledom@member.fsf.org>  Sun, 09 Aug 2020 09:55:09 +0200
+
 lwip (2.1.2+dfsg1-7) unstable; urgency=low
 
   [ Debian Janitor ]
