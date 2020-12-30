@@ -1,3 +1,9 @@
+lwip (2.1.2+dfsg1-9) UNRELEASED; urgency=medium
+
+  * rules: Fix reproducibility by adding reproducible=+fixfilepath.
+
+ -- Samuel Thibault <sthibault@debian.org>  Wed, 30 Dec 2020 20:26:30 +0100
+
 lwip (2.1.2+dfsg1-8) unstable; urgency=medium
 
   * No-change source-only upload to allow testing migration.
