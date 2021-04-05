@@ -2,6 +2,7 @@ Source: lwip
 Priority: optional
 Maintainer: Joan Lledó <jlledom@member.fsf.org>
 Build-Depends: debhelper-compat (= 12), cmake, doxygen
+Rules-Requires-Root: no
 Standards-Version: 4.5.0
 Section: libs
 Homepage: https://savannah.nongnu.org/projects/lwip/
