@@ -29,7 +29,7 @@ Description: small implementation of the TCP/IP protocol suite - development fil
 
 Package: liblwip0
 Architecture: any
-Multi-arch: same
+Multi-Arch: same
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: small implementation of the TCP/IP protocol suite - shared library
  lwIP is a small independent implementation of the TCP/IPv4/IPv6 protocol
