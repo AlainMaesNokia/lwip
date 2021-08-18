@@ -1,3 +1,12 @@
+lwip (2.1.2+dfsg1-8+deb11u1) UNRELEASED; urgency=high
+
+  * Fix CVE-2020-22283
+  * closes: 991645
+  * Fix CVE-2020-22284
+  * closes: 991646
+
+ -- Joan Lledó <jlledom@member.fsf.org>  Wed, 18 Aug 2021 11:04:20 +0200
+
 lwip (2.1.2+dfsg1-8) unstable; urgency=medium
 
   * No-change source-only upload to allow testing migration.
