@@ -1,9 +1,9 @@
-lwip (2.1.2+dfsg1-9) UNRELEASED; urgency=medium
+lwip (2.1.2+dfsg1-9) unstable; urgency=medium
 
   * rules: Fix reproducibility by adding reproducible=+fixfilepath.
   * control: Set Rules-Requires-Root to no.
 
- -- Samuel Thibault <sthibault@debian.org>  Wed, 30 Dec 2020 20:26:30 +0100
+ -- Samuel Thibault <sthibault@debian.org>  Tue, 26 Oct 2021 00:36:38 +0200
 
 lwip (2.1.2+dfsg1-8) unstable; urgency=medium
 
