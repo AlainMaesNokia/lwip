@@ -1,5 +1,7 @@
 Not intended to be upstream
 
+Author: Joan Lledó <joanlluislledo@gmail.com>
+
 --- /dev/null
 +++ b/lib/CMakeLists.txt
 @@ -0,0 +1,126 @@

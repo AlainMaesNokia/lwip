@@ -126,10 +126,6 @@ License: Prior-BSD
  WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 Comment: https://en.wikipedia.org/wiki/BSD_licenses#Previous_license
 
-Files: lib/CMakeLists.txt
-Copyright: 2019 Joan Lledó <jlledom@member.fsf.org>
-License: GPL-2+
-
 Files: debian/*
 Copyright: 2017-2018 Samuel Thibault <sthibault@debian.org>,
            2017-2020 Joan Lledó <jlledom@member.fsf.org>
