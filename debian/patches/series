@@ -2,4 +2,5 @@ patch9350
 patch9807
 CVE-2020-8597
 port
+max_sockets
 cmake

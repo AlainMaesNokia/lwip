@@ -1,0 +1,302 @@
+Won't get to upstream
+
+--- a/src/core/init.c
++++ b/src/core/init.c
+@@ -175,6 +175,9 @@
+ #if ((LWIP_SOCKET || LWIP_NETCONN) && (NO_SYS==1))
+ #error "If you want to use Sequential API, you have to define NO_SYS=0 in your lwipopts.h"
+ #endif
++#if (LWIP_SOCKET_OPEN_COUNT && LWIP_SOCKET_SELECT)
++#error "If you want to use LWIP_SOCKET_OPEN_COUNT, you must define LWIP_SOCKET_SELECT=0 in your lwipopts.h"
++#endif
+ #if (LWIP_PPP_API && (NO_SYS==1))
+ #error "If you want to use PPP API, you have to define NO_SYS=0 in your lwipopts.h"
+ #endif
+--- a/src/include/lwip/opt.h
++++ b/src/include/lwip/opt.h
+@@ -1984,6 +1984,15 @@
+ #endif
+ 
+ /**
++ * LWIP_SOCKET_OPEN_COUNT==1: Number of sockets is not limited to MEMP_NUM_NETCONN.
++ * When enabled, sockets are allocated in the heap and the amount of sockets is
++ * only limited by the heap size. Handle with care regarding execution speed.
++ */
++#if !defined LWIP_SOCKET_OPEN_COUNT || defined __DOXYGEN__
++#define LWIP_SOCKET_OPEN_COUNT          0
++#endif
++
++/**
+  * LWIP_TCP_KEEPALIVE==1: Enable TCP_KEEPIDLE, TCP_KEEPINTVL and TCP_KEEPCNT
+  * options processing. Note that TCP_KEEPIDLE and TCP_KEEPINTVL have to be set
+  * in seconds. (does not require sockets.c, and will affect tcp.c)
+--- a/src/api/sockets.c
++++ b/src/api/sockets.c
+@@ -256,8 +256,13 @@
+ static void lwip_socket_drop_registered_mld6_memberships(int s);
+ #endif /* LWIP_IPV6_MLD */
+ 
++#if LWIP_SOCKET_OPEN_COUNT
++/** The global linked list of available sockets */
++static struct lwip_sock *sockets = NULL;
++#else /* LWIP_SOCKET_OPEN_COUNT */
+ /** The global array of available sockets */
+ static struct lwip_sock sockets[NUM_SOCKETS];
++#endif /* LWIP_SOCKET_OPEN_COUNT */
+ 
+ #if LWIP_SOCKET_SELECT || LWIP_SOCKET_POLL
+ #if LWIP_TCPIP_CORE_LOCKING
+@@ -406,16 +411,47 @@
+ #define done_socket(sock)
+ #endif /* LWIP_NETCONN_FULLDUPLEX */
+ 
++/* Translate a socket 'int' into a pointer (doesn't check the validity of the index) */
++static struct lwip_sock *
++translate_socket(int s)
++{
++#if LWIP_SOCKET_OPEN_COUNT
++  struct lwip_sock *sock;
++
++  /*
++   * We need to protect the integrity of the list itself,
++   * since elements may be dynamically inserted or deleted.
++   */
++  SYS_ARCH_DECL_PROTECT(lev);
++  SYS_ARCH_PROTECT(lev);
++  for(sock = sockets; sock != NULL; sock = sock->next) {
++    if(sock->count == s) {
++      break;
++    }
++  }
++  SYS_ARCH_UNPROTECT(lev);
++  return sock;
++#else /* LWIP_SOCKET_OPEN_COUNT */
++  return &sockets[s];
++#endif /* LWIP_SOCKET_OPEN_COUNT */
++}
++
+ /* Translate a socket 'int' into a pointer (only fails if the index is invalid) */
+ static struct lwip_sock *
+ tryget_socket_unconn_nouse(int fd)
+ {
+   int s = fd - LWIP_SOCKET_OFFSET;
+-  if ((s < 0) || (s >= NUM_SOCKETS)) {
++
++  if ((s < 0)
++#if !LWIP_SOCKET_OPEN_COUNT
++      || (s >= NUM_SOCKETS)
++#endif /* !LWIP_SOCKET_OPEN_COUNT */
++      ) {
+     LWIP_DEBUGF(SOCKETS_DEBUG, ("tryget_socket_unconn(%d): invalid\n", fd));
+     return NULL;
+   }
+-  return &sockets[s];
++
++  return translate_socket(s);
+ }
+ 
+ struct lwip_sock *
+@@ -480,8 +516,11 @@
+ {
+   struct lwip_sock *sock = tryget_socket(fd);
+   if (!sock) {
+-    if ((fd < LWIP_SOCKET_OFFSET) || (fd >= (LWIP_SOCKET_OFFSET + NUM_SOCKETS))) {
+-      LWIP_DEBUGF(SOCKETS_DEBUG, ("get_socket(%d): invalid\n", fd));
++    if ((fd < LWIP_SOCKET_OFFSET)
++#if !LWIP_SOCKET_OPEN_COUNT
++          || (fd >= (LWIP_SOCKET_OFFSET + NUM_SOCKETS))
++#endif /* !LWIP_SOCKET_OPEN_COUNT */
++        ) {      LWIP_DEBUGF(SOCKETS_DEBUG, ("get_socket(%d): invalid\n", fd));
+     }
+     set_errno(EBADF);
+     return NULL;
+@@ -501,40 +540,87 @@
+ alloc_socket(struct netconn *newconn, int accepted)
+ {
+   int i;
++  struct lwip_sock *newsock = NULL;
++#if LWIP_SOCKET_OPEN_COUNT
++  struct lwip_sock **it;
++#endif /* LWIP_SOCKET_OPEN_COUNT */
++
+   SYS_ARCH_DECL_PROTECT(lev);
+   LWIP_UNUSED_ARG(accepted);
+ 
++#if LWIP_SOCKET_OPEN_COUNT
++  newsock = (struct lwip_sock*)mem_calloc(1, sizeof(struct lwip_sock));
++  if(!newsock) {
++    /* No free memory */
++    return -1;
++  }
++
++  it = &sockets;
++  i = 0;
++  /* Protect socket list */
++  SYS_ARCH_PROTECT(lev);
++  while(*it) {
++    if((*it)->count != i) {
++      /* There's a gap in the list, fill it */
++      break;
++    }
++    i++;
++    it = &(*it)->next;
++  }
++  /* Add the new socket in the first gap found or in the end */
++  newsock->count = i;
++  newsock->next = (*it);
++  (*it) = newsock;
++  newsock->conn = newconn;
++#else /* LWIP_SOCKET_OPEN_COUNT */
+   /* allocate a new socket identifier */
+   for (i = 0; i < NUM_SOCKETS; ++i) {
+     /* Protect socket array */
+     SYS_ARCH_PROTECT(lev);
+-    if (!sockets[i].conn) {
++    newsock = &sockets[i];
++    if (!newsock->conn) {
+ #if LWIP_NETCONN_FULLDUPLEX
+-      if (sockets[i].fd_used) {
++      if (newsock->fd_used) {
+         SYS_ARCH_UNPROTECT(lev);
+         continue;
+       }
+-      sockets[i].fd_used    = 1;
+-      sockets[i].fd_free_pending = 0;
+-#endif
+-      sockets[i].conn       = newconn;
+-      /* The socket is not yet known to anyone, so no need to protect
+-         after having marked it as used. */
+-      SYS_ARCH_UNPROTECT(lev);
+-      sockets[i].lastdata.pbuf = NULL;
+-#if LWIP_SOCKET_SELECT || LWIP_SOCKET_POLL
+-      LWIP_ASSERT("sockets[i].select_waiting == 0", sockets[i].select_waiting == 0);
+-      sockets[i].rcvevent   = 0;
+-      /* TCP sendbuf is empty, but the socket is not yet writable until connected
+-       * (unless it has been created by accept()). */
+-      sockets[i].sendevent  = (NETCONNTYPE_GROUP(newconn->type) == NETCONN_TCP ? (accepted != 0) : 1);
+-      sockets[i].errevent   = 0;
+-#endif /* LWIP_SOCKET_SELECT || LWIP_SOCKET_POLL */
+-      return i + LWIP_SOCKET_OFFSET;
++#endif /* LWIP_NETCONN_FULLDUPLEX */
++      newsock->conn = newconn;
++      break;
+     }
+     SYS_ARCH_UNPROTECT(lev);
+   }
+-  return -1;
++
++  if(!newsock->conn) {
++    /* No free sockets available */
++    SYS_ARCH_UNPROTECT(lev);
++    return -1;
++  }
++#endif /* LWIP_SOCKET_OPEN_COUNT */
++
++#if LWIP_NETCONN_FULLDUPLEX
++  newsock->fd_used    = 1;
++  newsock->fd_free_pending = 0;
++#endif /* LWIP_NETCONN_FULLDUPLEX */
++
++  /* The socket is not yet known to anyone, so no need to protect
++     after having marked it as used. */
++  SYS_ARCH_UNPROTECT(lev);
++  newsock->lastdata.pbuf = NULL;
++#if LWIP_SOCKET_SELECT || LWIP_SOCKET_POLL
++  LWIP_ASSERT("newsock->select_waiting == 0", newsock->select_waiting == 0);
++  newsock->rcvevent   = 0;
++  /* TCP sendbuf is empty, but the socket is not yet writable until connected
++   * (unless it has been created by accept()). */
++  newsock->sendevent  = (NETCONNTYPE_GROUP(newconn->type) == NETCONN_TCP ? (accepted != 0) : 1);
++  newsock->errevent   = 0;
++#endif /* LWIP_SOCKET_SELECT || LWIP_SOCKET_POLL */
++
++#if LWIP_SOCKET_OPEN_COUNT
++  return newsock->count + LWIP_SOCKET_OFFSET;
++#else /* LWIP_SOCKET_OPEN_COUNT */
++  return i + LWIP_SOCKET_OFFSET;
++#endif /* LWIP_SOCKET_OPEN_COUNT */
+ }
+ 
+ /** Free a socket (under lock)
+@@ -548,6 +634,10 @@
+ free_socket_locked(struct lwip_sock *sock, int is_tcp, struct netconn **conn,
+                    union lwip_sock_lastdata *lastdata)
+ {
++#if LWIP_SOCKET_OPEN_COUNT
++  struct lwip_sock **it = &sockets;
++#endif /* LWIP_SOCKET_OPEN_COUNT */
++
+ #if LWIP_NETCONN_FULLDUPLEX
+   LWIP_ASSERT("sock->fd_used > 0", sock->fd_used > 0);
+   sock->fd_used--;
+@@ -560,9 +650,18 @@
+ #endif /* LWIP_NETCONN_FULLDUPLEX */
+ 
+   *lastdata = sock->lastdata;
+-  sock->lastdata.pbuf = NULL;
+   *conn = sock->conn;
+   sock->conn = NULL;
++
++#if LWIP_SOCKET_OPEN_COUNT
++  while(*it != sock) it = &(*it)->next;
++  *it = (*it)->next;
++  mem_free(sock);
++#else /* LWIP_SOCKET_OPEN_COUNT */
++  sock->lastdata.pbuf = NULL;
++  sock->conn = NULL;
++#endif /* LWIP_SOCKET_OPEN_COUNT */
++
+   return 1;
+ }
+ 
+@@ -657,9 +756,14 @@
+     done_socket(sock);
+     return -1;
+   }
++
++#if !LWIP_SOCKET_OPEN_COUNT
+   LWIP_ASSERT("invalid socket index", (newsock >= LWIP_SOCKET_OFFSET) && (newsock < NUM_SOCKETS + LWIP_SOCKET_OFFSET));
+-  nsock = &sockets[newsock - LWIP_SOCKET_OFFSET];
++#else /* !LWIP_SOCKET_OPEN_COUNT */
++  LWIP_ASSERT("invalid socket index", (newsock >= LWIP_SOCKET_OFFSET));
++#endif /* !LWIP_SOCKET_OPEN_COUNT */
+ 
++  nsock = translate_socket(newsock - LWIP_SOCKET_OFFSET);
+   /* See event_callback: If data comes in right away after an accept, even
+    * though the server task might not have created a new socket yet.
+    * In that case, newconn->socket is counted down (newconn->socket--),
+@@ -1736,7 +1840,7 @@
+     return -1;
+   }
+   conn->socket = i;
+-  done_socket(&sockets[i - LWIP_SOCKET_OFFSET]);
++  done_socket(translate_socket(i - LWIP_SOCKET_OFFSET));
+   LWIP_DEBUGF(SOCKETS_DEBUG, ("%d\n", i));
+   set_errno(0);
+   return i;
+--- a/src/include/lwip/priv/sockets_priv.h
++++ b/src/include/lwip/priv/sockets_priv.h
+@@ -65,6 +65,12 @@
+ 
+ /** Contains all internal pointers and states used for a socket */
+ struct lwip_sock {
++#if LWIP_SOCKET_OPEN_COUNT
++  /** Next element in the linked list */
++  struct lwip_sock *next;
++  /** Socket number*/
++  int count;
++#endif /* LWIP_SOCKET_OPEN_COUNT */
+   /** sockets currently are built on netconns, each socket has one netconn */
+   struct netconn *conn;
+   /** data that was left from the previous read */
+--- a/port/include/lwipopts.h
++++ b/port/include/lwipopts.h
+@@ -27,6 +27,8 @@
+ #define LWIP_COMPAT_SOCKETS       0
+ #define LWIP_SOCKET_OFFSET        1
+ #define LWIP_POLL                 1
++#define LWIP_SOCKET_OPEN_COUNT    1
++#define LWIP_SOCKET_SELECT        0
+ 
+ /* User posix socket headers */
+ #define LWIP_SOCKET_EXTERNAL_HEADERS            1
