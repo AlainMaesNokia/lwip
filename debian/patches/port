@@ -1339,7 +1339,7 @@ Not intended to be upstream
        (sin6)->sin6_family = AF_INET6; \
        (sin6)->sin6_port = lwip_htons((port)); \
        (sin6)->sin6_flowinfo = 0; \
-@@ -696,8 +696,8 @@
+@@ -695,8 +695,8 @@
      }
  
      IPADDR_PORT_TO_SOCKADDR(&tempaddr, &naddr, port);
@@ -1350,7 +1350,7 @@ Not intended to be upstream
      }
      MEMCPY(addr, &tempaddr, *addrlen);
  
-@@ -1041,10 +1041,10 @@
+@@ -1040,10 +1040,10 @@
  #endif /* LWIP_IPV4 && LWIP_IPV6 */
  
    IPADDR_PORT_TO_SOCKADDR(&saddr, fromaddr, port);
@@ -1364,7 +1364,7 @@ Not intended to be upstream
    }
    MEMCPY(from, &saddr, *fromlen);
    return truncated;
-@@ -1123,7 +1123,7 @@
+@@ -1122,7 +1122,7 @@
  
    copied = 0;
    /* copy the pbuf payload into the iovs */
@@ -1373,7 +1373,7 @@ Not intended to be upstream
      u16_t len_left = (u16_t)(buflen - copied);
      if (msg->msg_iov[i].iov_len > len_left) {
        copylen = len_left;
-@@ -1301,7 +1301,7 @@
+@@ -1300,7 +1300,7 @@
  
    /* check for valid vectors */
    buflen = 0;
@@ -1382,7 +1382,7 @@ Not intended to be upstream
      if ((message->msg_iov[i].iov_base == NULL) || ((ssize_t)message->msg_iov[i].iov_len <= 0) ||
          ((size_t)(ssize_t)message->msg_iov[i].iov_len != message->msg_iov[i].iov_len) ||
          ((ssize_t)(buflen + (ssize_t)message->msg_iov[i].iov_len) <= 0)) {
-@@ -1318,7 +1318,7 @@
+@@ -1317,7 +1317,7 @@
      message->msg_flags = 0;
      /* recv the data */
      buflen = 0;
@@ -1391,7 +1391,7 @@ Not intended to be upstream
        /* try to receive into this vector's buffer */
        ssize_t recvd_local = lwip_recv_tcp(sock, message->msg_iov[i].iov_base, message->msg_iov[i].iov_len, recv_flags);
        if (recvd_local > 0) {
-@@ -1484,7 +1484,7 @@
+@@ -1483,7 +1483,7 @@
        netbuf_fromport(&chain_buf) = remote_port;
      }
  #if LWIP_NETIF_TX_SINGLE_PBUF
@@ -1400,7 +1400,7 @@ Not intended to be upstream
        size += msg->msg_iov[i].iov_len;
        if ((msg->msg_iov[i].iov_len > INT_MAX) || (size < (int)msg->msg_iov[i].iov_len)) {
          /* overflow */
-@@ -1501,7 +1501,7 @@
+@@ -1500,7 +1500,7 @@
      } else {
        /* flatten the IO vectors */
        size_t offset = 0;
@@ -1409,7 +1409,7 @@ Not intended to be upstream
          MEMCPY(&((u8_t *)chain_buf.p->payload)[offset], msg->msg_iov[i].iov_base, msg->msg_iov[i].iov_len);
          offset += msg->msg_iov[i].iov_len;
        }
-@@ -1517,7 +1517,7 @@
+@@ -1516,7 +1516,7 @@
  #else /* LWIP_NETIF_TX_SINGLE_PBUF */
      /* create a chained netbuf from the IO vectors. NOTE: we assemble a pbuf chain
         manually to avoid having to allocate, chain, and delete a netbuf for each iov */
@@ -1418,7 +1418,7 @@ Not intended to be upstream
        struct pbuf *p;
        if (msg->msg_iov[i].iov_len > 0xFFFF) {
          /* overflow */
-@@ -2733,8 +2733,8 @@
+@@ -2739,8 +2739,8 @@
    ip_addr_debug_print_val(SOCKETS_DEBUG, naddr);
    LWIP_DEBUGF(SOCKETS_DEBUG, (" port=%"U16_F")\n", port));
  

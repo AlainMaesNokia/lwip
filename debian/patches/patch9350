@@ -33,7 +33,7 @@ Signed-off-by: Simon Goldschmidt <goldsimon@gmx.de>
  #endif /* LWIP_HDR_INET_H */
 --- a/src/include/lwip/opt.h
 +++ b/src/include/lwip/opt.h
-@@ -1973,6 +1973,17 @@
+@@ -1978,6 +1978,17 @@
  #endif
  
  /**

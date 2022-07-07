@@ -14,7 +14,7 @@ Won't get to upstream
  #endif
 --- a/src/include/lwip/opt.h
 +++ b/src/include/lwip/opt.h
-@@ -1984,6 +1984,15 @@
+@@ -1989,6 +1989,15 @@
  #endif
  
  /**
@@ -265,7 +265,7 @@ Won't get to upstream
    /* See event_callback: If data comes in right away after an accept, even
     * though the server task might not have created a new socket yet.
     * In that case, newconn->socket is counted down (newconn->socket--),
-@@ -1736,7 +1840,7 @@
+@@ -1735,7 +1839,7 @@
      return -1;
    }
    conn->socket = i;
