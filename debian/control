@@ -3,7 +3,7 @@ Priority: optional
 Maintainer: Joan Lledó <jlledom@member.fsf.org>
 Build-Depends: debhelper-compat (= 12), cmake, doxygen
 Rules-Requires-Root: no
-Standards-Version: 4.6.0
+Standards-Version: 4.6.1
 Section: libs
 Homepage: https://savannah.nongnu.org/projects/lwip/
 Vcs-Git: https://salsa.debian.org/debian/lwip.git

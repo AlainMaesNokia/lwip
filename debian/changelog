@@ -5,7 +5,8 @@ lwip (2.1.3+dfsg1-2) UNRELEASED; urgency=medium
   * patches/max_sockets: Restore patch, it was not actually upstreamed.
 
   [ Joan Lledó ]
-  * Refresh patches 
+  * Refresh patches
+  * Update standards version to 4.6.1
 
  -- Samuel Thibault <sthibault@debian.org>  Sat, 08 Jan 2022 17:16:44 +0100
 
