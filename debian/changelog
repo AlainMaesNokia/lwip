@@ -2,8 +2,9 @@ lwip (2.1.2+dfsg1-8+deb11u1) bullseye; urgency=high
 
   * Fix CVE-2020-22283
   * Fix CVE-2020-22284
+  * closes: 1014447
 
- -- Joan Lledó <jlledom@member.fsf.org>  Wed, 06 Jul 2022 10:55:52 +0200
+ -- Joan Lledó <jlledom@member.fsf.org>  Sun, 07 Aug 2022 11:16:06 +0200
 
 lwip (2.1.2+dfsg1-8) unstable; urgency=medium
 
