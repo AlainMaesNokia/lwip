@@ -1,3 +1,7 @@
+FORK FROM DEBIAN PACKAGE
+
+Forked https://salsa.debian.org/debian/lwip and applied patches. The script used to apply the patches is apply_patches.sh.
+
 INTRODUCTION
 
 lwIP is a small independent implementation of the TCP/IP protocol suite.

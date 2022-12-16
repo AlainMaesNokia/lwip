@@ -65,6 +65,12 @@ union lwip_sock_lastdata {
 
 /** Contains all internal pointers and states used for a socket */
 struct lwip_sock {
+#if LWIP_SOCKET_OPEN_COUNT
+  /** Next element in the linked list */
+  struct lwip_sock *next;
+  /** Socket number*/
+  int count;
+#endif /* LWIP_SOCKET_OPEN_COUNT */
   /** sockets currently are built on netconns, each socket has one netconn */
   struct netconn *conn;
   /** data that was left from the previous read */

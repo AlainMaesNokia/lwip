@@ -93,7 +93,6 @@ set(lwipnetif_SRCS
     ${LWIP_DIR}/src/netif/ethernet.c
     ${LWIP_DIR}/src/netif/bridgeif.c
     ${LWIP_DIR}/src/netif/bridgeif_fdb.c
-    ${LWIP_DIR}/src/netif/slipif.c
 )
 
 # 6LoWPAN
@@ -257,7 +256,7 @@ find_package(Doxygen)
 if (DOXYGEN_FOUND)
     message("Doxygen build started")
 
-    add_custom_target(lwipdocs
+    add_custom_target(lwipdocs ALL
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${DOXYGEN_DIR}/${DOXYGEN_OUTPUT_DIR}/html
         COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
         WORKING_DIRECTORY ${DOXYGEN_DIR}

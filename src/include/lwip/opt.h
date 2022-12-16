@@ -1973,6 +1973,26 @@
 #endif
 
 /**
+ * LWIP_SOCKET_EXTERNAL_HEADERS==1: Use external headers instead of sockets.h
+ * and inet.h. In this case, user must provide its own headers by setting the
+ * values for LWIP_SOCKET_EXTERNAL_HEADER_SOCKETS_H and
+ * LWIP_SOCKET_EXTERNAL_HEADER_INET_H to appropriate include file names and the
+ * whole content of the default sockets.h and inet.h is skipped.
+ */
+#if !defined LWIP_SOCKET_EXTERNAL_HEADERS || defined __DOXYGEN__
+#define LWIP_SOCKET_EXTERNAL_HEADERS    0
+#endif
+
+/**
+ * LWIP_SOCKET_OPEN_COUNT==1: Number of sockets is not limited to MEMP_NUM_NETCONN.
+ * When enabled, sockets are allocated in the heap and the amount of sockets is
+ * only limited by the heap size. Handle with care regarding execution speed.
+ */
+#if !defined LWIP_SOCKET_OPEN_COUNT || defined __DOXYGEN__
+#define LWIP_SOCKET_OPEN_COUNT          0
+#endif
+
+/**
  * LWIP_TCP_KEEPALIVE==1: Enable TCP_KEEPIDLE, TCP_KEEPINTVL and TCP_KEEPCNT
  * options processing. Note that TCP_KEEPIDLE and TCP_KEEPINTVL have to be set
  * in seconds. (does not require sockets.c, and will affect tcp.c)
@@ -2491,10 +2511,12 @@
 
 /**
  * LWIP_ICMP6_DATASIZE: bytes from original packet to send back in
- * ICMPv6 error messages.
+ * ICMPv6 error messages (0 = default of IP6_MIN_MTU_LENGTH)
+ * ATTENTION: RFC4443 section 2.4 says IP6_MIN_MTU_LENGTH is a MUST,
+ * so override this only if you absolutely have to!
  */
 #if !defined LWIP_ICMP6_DATASIZE || defined __DOXYGEN__
-#define LWIP_ICMP6_DATASIZE             8
+#define LWIP_ICMP6_DATASIZE             0
 #endif
 
 /**

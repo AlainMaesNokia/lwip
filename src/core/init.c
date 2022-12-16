@@ -175,6 +175,9 @@ PACK_STRUCT_END
 #if ((LWIP_SOCKET || LWIP_NETCONN) && (NO_SYS==1))
 #error "If you want to use Sequential API, you have to define NO_SYS=0 in your lwipopts.h"
 #endif
+#if (LWIP_SOCKET_OPEN_COUNT && LWIP_SOCKET_SELECT)
+#error "If you want to use LWIP_SOCKET_OPEN_COUNT, you must define LWIP_SOCKET_SELECT=0 in your lwipopts.h"
+#endif
 #if (LWIP_PPP_API && (NO_SYS==1))
 #error "If you want to use PPP API, you have to define NO_SYS=0 in your lwipopts.h"
 #endif

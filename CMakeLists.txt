@@ -18,3 +18,6 @@ include(CPack)
 # Target for package generation
 add_custom_target(dist COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
 add_dependencies(dist lwipdocs)
+
+# Build shared library
+include(${LWIP_DIR}/lib/CMakeLists.txt)

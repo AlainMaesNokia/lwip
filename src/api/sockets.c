@@ -87,7 +87,7 @@
 
 #if LWIP_IPV4
 #define IP4ADDR_PORT_TO_SOCKADDR(sin, ipaddr, port) do { \
-      (sin)->sin_len = sizeof(struct sockaddr_in); \
+      IP4ADDR_SOCKADDR_SET_LEN(sin); \
       (sin)->sin_family = AF_INET; \
       (sin)->sin_port = lwip_htons((port)); \
       inet_addr_from_ip4addr(&(sin)->sin_addr, ipaddr); \
@@ -99,7 +99,7 @@
 
 #if LWIP_IPV6
 #define IP6ADDR_PORT_TO_SOCKADDR(sin6, ipaddr, port) do { \
-      (sin6)->sin6_len = sizeof(struct sockaddr_in6); \
+      IP6ADDR_SOCKADDR_SET_LEN(sin6); \
       (sin6)->sin6_family = AF_INET6; \
       (sin6)->sin6_port = lwip_htons((port)); \
       (sin6)->sin6_flowinfo = 0; \
@@ -256,8 +256,13 @@ static void lwip_socket_unregister_mld6_membership(int s, unsigned int if_idx, c
 static void lwip_socket_drop_registered_mld6_memberships(int s);
 #endif /* LWIP_IPV6_MLD */
 
+#if LWIP_SOCKET_OPEN_COUNT
+/** The global linked list of available sockets */
+static struct lwip_sock *sockets = NULL;
+#else /* LWIP_SOCKET_OPEN_COUNT */
 /** The global array of available sockets */
 static struct lwip_sock sockets[NUM_SOCKETS];
+#endif /* LWIP_SOCKET_OPEN_COUNT */
 
 #if LWIP_SOCKET_SELECT || LWIP_SOCKET_POLL
 #if LWIP_TCPIP_CORE_LOCKING
@@ -406,16 +411,47 @@ done_socket(struct lwip_sock *sock)
 #define done_socket(sock)
 #endif /* LWIP_NETCONN_FULLDUPLEX */
 
+/* Translate a socket 'int' into a pointer (doesn't check the validity of the index) */
+static struct lwip_sock *
+translate_socket(int s)
+{
+#if LWIP_SOCKET_OPEN_COUNT
+  struct lwip_sock *sock;
+
+  /*
+   * We need to protect the integrity of the list itself,
+   * since elements may be dynamically inserted or deleted.
+   */
+  SYS_ARCH_DECL_PROTECT(lev);
+  SYS_ARCH_PROTECT(lev);
+  for(sock = sockets; sock != NULL; sock = sock->next) {
+    if(sock->count == s) {
+      break;
+    }
+  }
+  SYS_ARCH_UNPROTECT(lev);
+  return sock;
+#else /* LWIP_SOCKET_OPEN_COUNT */
+  return &sockets[s];
+#endif /* LWIP_SOCKET_OPEN_COUNT */
+}
+
 /* Translate a socket 'int' into a pointer (only fails if the index is invalid) */
 static struct lwip_sock *
 tryget_socket_unconn_nouse(int fd)
 {
   int s = fd - LWIP_SOCKET_OFFSET;
-  if ((s < 0) || (s >= NUM_SOCKETS)) {
+
+  if ((s < 0)
+#if !LWIP_SOCKET_OPEN_COUNT
+      || (s >= NUM_SOCKETS)
+#endif /* !LWIP_SOCKET_OPEN_COUNT */
+      ) {
     LWIP_DEBUGF(SOCKETS_DEBUG, ("tryget_socket_unconn(%d): invalid\n", fd));
     return NULL;
   }
-  return &sockets[s];
+
+  return translate_socket(s);
 }
 
 struct lwip_sock *
@@ -480,8 +516,11 @@ get_socket(int fd)
 {
   struct lwip_sock *sock = tryget_socket(fd);
   if (!sock) {
-    if ((fd < LWIP_SOCKET_OFFSET) || (fd >= (LWIP_SOCKET_OFFSET + NUM_SOCKETS))) {
-      LWIP_DEBUGF(SOCKETS_DEBUG, ("get_socket(%d): invalid\n", fd));
+    if ((fd < LWIP_SOCKET_OFFSET)
+#if !LWIP_SOCKET_OPEN_COUNT
+          || (fd >= (LWIP_SOCKET_OFFSET + NUM_SOCKETS))
+#endif /* !LWIP_SOCKET_OPEN_COUNT */
+        ) {      LWIP_DEBUGF(SOCKETS_DEBUG, ("get_socket(%d): invalid\n", fd));
     }
     set_errno(EBADF);
     return NULL;
@@ -501,40 +540,87 @@ static int
 alloc_socket(struct netconn *newconn, int accepted)
 {
   int i;
+  struct lwip_sock *newsock = NULL;
+#if LWIP_SOCKET_OPEN_COUNT
+  struct lwip_sock **it;
+#endif /* LWIP_SOCKET_OPEN_COUNT */
+
   SYS_ARCH_DECL_PROTECT(lev);
   LWIP_UNUSED_ARG(accepted);
 
+#if LWIP_SOCKET_OPEN_COUNT
+  newsock = (struct lwip_sock*)mem_calloc(1, sizeof(struct lwip_sock));
+  if(!newsock) {
+    /* No free memory */
+    return -1;
+  }
+
+  it = &sockets;
+  i = 0;
+  /* Protect socket list */
+  SYS_ARCH_PROTECT(lev);
+  while(*it) {
+    if((*it)->count != i) {
+      /* There's a gap in the list, fill it */
+      break;
+    }
+    i++;
+    it = &(*it)->next;
+  }
+  /* Add the new socket in the first gap found or in the end */
+  newsock->count = i;
+  newsock->next = (*it);
+  (*it) = newsock;
+  newsock->conn = newconn;
+#else /* LWIP_SOCKET_OPEN_COUNT */
   /* allocate a new socket identifier */
   for (i = 0; i < NUM_SOCKETS; ++i) {
     /* Protect socket array */
     SYS_ARCH_PROTECT(lev);
-    if (!sockets[i].conn) {
+    newsock = &sockets[i];
+    if (!newsock->conn) {
 #if LWIP_NETCONN_FULLDUPLEX
-      if (sockets[i].fd_used) {
+      if (newsock->fd_used) {
         SYS_ARCH_UNPROTECT(lev);
         continue;
       }
-      sockets[i].fd_used    = 1;
-      sockets[i].fd_free_pending = 0;
-#endif
-      sockets[i].conn       = newconn;
-      /* The socket is not yet known to anyone, so no need to protect
-         after having marked it as used. */
-      SYS_ARCH_UNPROTECT(lev);
-      sockets[i].lastdata.pbuf = NULL;
-#if LWIP_SOCKET_SELECT || LWIP_SOCKET_POLL
-      LWIP_ASSERT("sockets[i].select_waiting == 0", sockets[i].select_waiting == 0);
-      sockets[i].rcvevent   = 0;
-      /* TCP sendbuf is empty, but the socket is not yet writable until connected
-       * (unless it has been created by accept()). */
-      sockets[i].sendevent  = (NETCONNTYPE_GROUP(newconn->type) == NETCONN_TCP ? (accepted != 0) : 1);
-      sockets[i].errevent   = 0;
-#endif /* LWIP_SOCKET_SELECT || LWIP_SOCKET_POLL */
-      return i + LWIP_SOCKET_OFFSET;
+#endif /* LWIP_NETCONN_FULLDUPLEX */
+      newsock->conn = newconn;
+      break;
     }
     SYS_ARCH_UNPROTECT(lev);
   }
-  return -1;
+
+  if(!newsock->conn) {
+    /* No free sockets available */
+    SYS_ARCH_UNPROTECT(lev);
+    return -1;
+  }
+#endif /* LWIP_SOCKET_OPEN_COUNT */
+
+#if LWIP_NETCONN_FULLDUPLEX
+  newsock->fd_used    = 1;
+  newsock->fd_free_pending = 0;
+#endif /* LWIP_NETCONN_FULLDUPLEX */
+
+  /* The socket is not yet known to anyone, so no need to protect
+     after having marked it as used. */
+  SYS_ARCH_UNPROTECT(lev);
+  newsock->lastdata.pbuf = NULL;
+#if LWIP_SOCKET_SELECT || LWIP_SOCKET_POLL
+  LWIP_ASSERT("newsock->select_waiting == 0", newsock->select_waiting == 0);
+  newsock->rcvevent   = 0;
+  /* TCP sendbuf is empty, but the socket is not yet writable until connected
+   * (unless it has been created by accept()). */
+  newsock->sendevent  = (NETCONNTYPE_GROUP(newconn->type) == NETCONN_TCP ? (accepted != 0) : 1);
+  newsock->errevent   = 0;
+#endif /* LWIP_SOCKET_SELECT || LWIP_SOCKET_POLL */
+
+#if LWIP_SOCKET_OPEN_COUNT
+  return newsock->count + LWIP_SOCKET_OFFSET;
+#else /* LWIP_SOCKET_OPEN_COUNT */
+  return i + LWIP_SOCKET_OFFSET;
+#endif /* LWIP_SOCKET_OPEN_COUNT */
 }
 
 /** Free a socket (under lock)
@@ -548,6 +634,10 @@ static int
 free_socket_locked(struct lwip_sock *sock, int is_tcp, struct netconn **conn,
                    union lwip_sock_lastdata *lastdata)
 {
+#if LWIP_SOCKET_OPEN_COUNT
+  struct lwip_sock **it = &sockets;
+#endif /* LWIP_SOCKET_OPEN_COUNT */
+
 #if LWIP_NETCONN_FULLDUPLEX
   LWIP_ASSERT("sock->fd_used > 0", sock->fd_used > 0);
   sock->fd_used--;
@@ -560,9 +650,18 @@ free_socket_locked(struct lwip_sock *sock, int is_tcp, struct netconn **conn,
 #endif /* LWIP_NETCONN_FULLDUPLEX */
 
   *lastdata = sock->lastdata;
-  sock->lastdata.pbuf = NULL;
   *conn = sock->conn;
   sock->conn = NULL;
+
+#if LWIP_SOCKET_OPEN_COUNT
+  while(*it != sock) it = &(*it)->next;
+  *it = (*it)->next;
+  mem_free(sock);
+#else /* LWIP_SOCKET_OPEN_COUNT */
+  sock->lastdata.pbuf = NULL;
+  sock->conn = NULL;
+#endif /* LWIP_SOCKET_OPEN_COUNT */
+
   return 1;
 }
 
@@ -657,9 +756,14 @@ lwip_accept(int s, struct sockaddr *addr, socklen_t *addrlen)
     done_socket(sock);
     return -1;
   }
-  LWIP_ASSERT("invalid socket index", (newsock >= LWIP_SOCKET_OFFSET) && (newsock < NUM_SOCKETS + LWIP_SOCKET_OFFSET));
-  nsock = &sockets[newsock - LWIP_SOCKET_OFFSET];
 
+#if !LWIP_SOCKET_OPEN_COUNT
+  LWIP_ASSERT("invalid socket index", (newsock >= LWIP_SOCKET_OFFSET) && (newsock < NUM_SOCKETS + LWIP_SOCKET_OFFSET));
+#else /* !LWIP_SOCKET_OPEN_COUNT */
+  LWIP_ASSERT("invalid socket index", (newsock >= LWIP_SOCKET_OFFSET));
+#endif /* !LWIP_SOCKET_OPEN_COUNT */
+
+  nsock = translate_socket(newsock - LWIP_SOCKET_OFFSET);
   /* See event_callback: If data comes in right away after an accept, even
    * though the server task might not have created a new socket yet.
    * In that case, newconn->socket is counted down (newconn->socket--),
@@ -696,8 +800,8 @@ lwip_accept(int s, struct sockaddr *addr, socklen_t *addrlen)
     }
 
     IPADDR_PORT_TO_SOCKADDR(&tempaddr, &naddr, port);
-    if (*addrlen > tempaddr.sa.sa_len) {
-      *addrlen = tempaddr.sa.sa_len;
+    if (*addrlen > IPADDR_SOCKADDR_GET_LEN(&tempaddr)) {
+      *addrlen = IPADDR_SOCKADDR_GET_LEN(&tempaddr);
     }
     MEMCPY(addr, &tempaddr, *addrlen);
 
@@ -1041,10 +1145,10 @@ lwip_sock_make_addr(struct netconn *conn, ip_addr_t *fromaddr, u16_t port,
 #endif /* LWIP_IPV4 && LWIP_IPV6 */
 
   IPADDR_PORT_TO_SOCKADDR(&saddr, fromaddr, port);
-  if (*fromlen < saddr.sa.sa_len) {
+  if (*fromlen < IPADDR_SOCKADDR_GET_LEN(&saddr)) {
     truncated = 1;
-  } else if (*fromlen > saddr.sa.sa_len) {
-    *fromlen = saddr.sa.sa_len;
+  } else if (*fromlen > IPADDR_SOCKADDR_GET_LEN(&saddr)) {
+    *fromlen = IPADDR_SOCKADDR_GET_LEN(&saddr);
   }
   MEMCPY(from, &saddr, *fromlen);
   return truncated;
@@ -1123,7 +1227,7 @@ lwip_recvfrom_udp_raw(struct lwip_sock *sock, int flags, struct msghdr *msg, u16
 
   copied = 0;
   /* copy the pbuf payload into the iovs */
-  for (i = 0; (i < msg->msg_iovlen) && (copied < buflen); i++) {
+  for (i = 0; (i < (int)msg->msg_iovlen) && (copied < buflen); i++) {
     u16_t len_left = (u16_t)(buflen - copied);
     if (msg->msg_iov[i].iov_len > len_left) {
       copylen = len_left;
@@ -1301,7 +1405,7 @@ lwip_recvmsg(int s, struct msghdr *message, int flags)
 
   /* check for valid vectors */
   buflen = 0;
-  for (i = 0; i < message->msg_iovlen; i++) {
+  for (i = 0; i < (int)message->msg_iovlen; i++) {
     if ((message->msg_iov[i].iov_base == NULL) || ((ssize_t)message->msg_iov[i].iov_len <= 0) ||
         ((size_t)(ssize_t)message->msg_iov[i].iov_len != message->msg_iov[i].iov_len) ||
         ((ssize_t)(buflen + (ssize_t)message->msg_iov[i].iov_len) <= 0)) {
@@ -1318,7 +1422,7 @@ lwip_recvmsg(int s, struct msghdr *message, int flags)
     message->msg_flags = 0;
     /* recv the data */
     buflen = 0;
-    for (i = 0; i < message->msg_iovlen; i++) {
+    for (i = 0; i < (int)message->msg_iovlen; i++) {
       /* try to receive into this vector's buffer */
       ssize_t recvd_local = lwip_recv_tcp(sock, message->msg_iov[i].iov_base, message->msg_iov[i].iov_len, recv_flags);
       if (recvd_local > 0) {
@@ -1484,7 +1588,7 @@ lwip_sendmsg(int s, const struct msghdr *msg, int flags)
       netbuf_fromport(&chain_buf) = remote_port;
     }
 #if LWIP_NETIF_TX_SINGLE_PBUF
-    for (i = 0; i < msg->msg_iovlen; i++) {
+    for (i = 0; i < (int)msg->msg_iovlen; i++) {
       size += msg->msg_iov[i].iov_len;
       if ((msg->msg_iov[i].iov_len > INT_MAX) || (size < (int)msg->msg_iov[i].iov_len)) {
         /* overflow */
@@ -1501,7 +1605,7 @@ lwip_sendmsg(int s, const struct msghdr *msg, int flags)
     } else {
       /* flatten the IO vectors */
       size_t offset = 0;
-      for (i = 0; i < msg->msg_iovlen; i++) {
+      for (i = 0; i < (int)msg->msg_iovlen; i++) {
         MEMCPY(&((u8_t *)chain_buf.p->payload)[offset], msg->msg_iov[i].iov_base, msg->msg_iov[i].iov_len);
         offset += msg->msg_iov[i].iov_len;
       }
@@ -1517,7 +1621,7 @@ lwip_sendmsg(int s, const struct msghdr *msg, int flags)
 #else /* LWIP_NETIF_TX_SINGLE_PBUF */
     /* create a chained netbuf from the IO vectors. NOTE: we assemble a pbuf chain
        manually to avoid having to allocate, chain, and delete a netbuf for each iov */
-    for (i = 0; i < msg->msg_iovlen; i++) {
+    for (i = 0; i < (int)msg->msg_iovlen; i++) {
       struct pbuf *p;
       if (msg->msg_iov[i].iov_len > 0xFFFF) {
         /* overflow */
@@ -1736,7 +1840,7 @@ lwip_socket(int domain, int type, int protocol)
     return -1;
   }
   conn->socket = i;
-  done_socket(&sockets[i - LWIP_SOCKET_OFFSET]);
+  done_socket(translate_socket(i - LWIP_SOCKET_OFFSET));
   LWIP_DEBUGF(SOCKETS_DEBUG, ("%d\n", i));
   set_errno(0);
   return i;
@@ -2733,8 +2837,8 @@ lwip_getaddrname(int s, struct sockaddr *name, socklen_t *namelen, u8_t local)
   ip_addr_debug_print_val(SOCKETS_DEBUG, naddr);
   LWIP_DEBUGF(SOCKETS_DEBUG, (" port=%"U16_F")\n", port));
 
-  if (*namelen > saddr.sa.sa_len) {
-    *namelen = saddr.sa.sa_len;
+  if (*namelen > IPADDR_SOCKADDR_GET_LEN(&saddr)) {
+    *namelen = IPADDR_SOCKADDR_GET_LEN(&saddr);
   }
   MEMCPY(name, &saddr, *namelen);
 
