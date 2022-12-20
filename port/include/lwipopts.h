@@ -65,7 +65,7 @@ extern unsigned char debug_flags;
 #define LWIP_IPV6_AUTOCONFIG       1
 
 /* Enable all socket operations */
-#define LWIP_SOCKET                 0 /* TODO (NO_SYS==0) */
+#define LWIP_SOCKET                (NO_SYS==0)
 #define LWIP_NETCONN               (NO_SYS==0)
 #define LWIP_TCP_KEEPALIVE          1
 #define LWIP_SO_SNDTIMEO            1
