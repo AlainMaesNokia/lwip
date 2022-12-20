@@ -1,6 +1,7 @@
 FORK FROM DEBIAN PACKAGE
 
 Forked https://salsa.debian.org/debian/lwip and applied patches. The script used to apply the patches is apply_patches.sh.
+All GPL code/files removed.
 
 INTRODUCTION
 

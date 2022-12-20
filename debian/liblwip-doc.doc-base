@@ -1,9 +1,0 @@
-Document: liblwip
-Title: LwIP Doxygen documentation
-Author: LwIP Developers
-Abstract: Doxygen-generated documentation for lwip
-Section: Network/Communication
-
-Format: HTML
-Index: /usr/share/doc/liblwip-dev/output/html/index.html
-Files: /usr/share/doc/liblwip-dev/output/html/*

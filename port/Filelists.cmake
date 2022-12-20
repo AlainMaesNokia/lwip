@@ -14,8 +14,4 @@ endif()
 
 set(lwipportunix_SRCS
     ${LWIP_DIR}/port/sys_arch.c
-    ${LWIP_DIR}/port/netif/fifo.c
-    ${LWIP_DIR}/port/netif/list.c
-    ${LWIP_DIR}/port/netif/sio.c
-    ${LWIP_DIR}/port/netif/tapif.c
 )

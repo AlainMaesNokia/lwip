@@ -1,9 +1,0 @@
-version=3
-opts=\
-repacksuffix=+dfsg1,\
-repack,\
-compression=xz,\
-dversionmangle=s/\+(debian|dfsg|ds|deb)(\d+)?$//,\
-pgpmode=auto\
- https://download.savannah.gnu.org/releases/lwip/ lwip-@ANY_VERSION@@ARCHIVE_EXT@
-

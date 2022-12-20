@@ -379,6 +379,15 @@ ip4_input_accept(struct netif *netif)
                          ip4_addr_get_u32(netif_ip4_addr(netif)) & ip4_addr_get_u32(netif_ip4_netmask(netif)),
                          ip4_addr_get_u32(ip4_current_dest_addr()) & ~ip4_addr_get_u32(netif_ip4_netmask(netif))));
 
+#ifdef LWIP_HOOK_IP4_INPUT_ACCEPT
+  if (LWIP_HOOK_IP4_INPUT_ACCEPT(netif) == 1) {
+      LWIP_DEBUGF(IP_DEBUG, ("ip4_input: packet accepted on interface %c%c\n",
+                             netif->name[0], netif->name[1]));
+      /* accept on this netif */
+      return 1;
+  }
+#endif
+
   /* interface is up and configured? */
   if ((netif_is_up(netif)) && (!ip4_addr_isany_val(*netif_ip4_addr(netif)))) {
     /* unicast to this interface address? */
