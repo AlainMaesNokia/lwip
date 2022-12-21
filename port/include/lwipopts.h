@@ -191,9 +191,10 @@ a lot of data that needs to be copied, this should be set high. */
 
 /* ---------- ARP options ---------- */
 /* Glibc sends more than one packet in a row during an ARP resolution */
-#define LWIP_ARP                1
-#define ARP_QUEUEING            1
-#define ARP_QUEUE_LEN           10
+#define LWIP_ARP                 1
+#define ARP_QUEUEING             1
+#define ARP_QUEUE_LEN            10
+#define ETHARP_TABLE_MATCH_NETIF 1
 
 /* ---------- IP options ---------- */
 /* Define IP_FORWARD to 1 if you wish to have the ability to forward
