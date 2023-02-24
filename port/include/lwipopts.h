@@ -9,7 +9,11 @@ struct netif *lwip_hook_ipv4_route(const struct ip4_addr *dest);
 #define LWIP_HOOK_IP4_INPUT_ACCEPT lwip_hook_ipv4_input_accept
 #define LWIP_HOOK_IP4_ROUTE lwip_hook_ipv4_route
 
+#define LWIP_DEBUG 1
 #define LWIP_DBG_MIN_LEVEL  0
+
+#define SYS_DEBUG        LWIP_DBG_ON
+#define TIMERS_DEBUG     LWIP_DBG_OFF
 
 #define TAPIF_DEBUG      LWIP_DBG_OFF
 #define TUNIF_DEBUG      LWIP_DBG_OFF
@@ -18,6 +22,7 @@ struct netif *lwip_hook_ipv4_route(const struct ip4_addr *dest);
 #define SIO_FIFO_DEBUG   LWIP_DBG_OFF
 #define TCPDUMP_DEBUG    LWIP_DBG_OFF
 
+#define DHCP_DEBUG       LWIP_DBG_ON
 #define PPP_DEBUG        LWIP_DBG_OFF
 #define MEM_DEBUG        LWIP_DBG_OFF
 #define MEMP_DEBUG       LWIP_DBG_OFF
@@ -43,11 +48,13 @@ struct netif *lwip_hook_ipv4_route(const struct ip4_addr *dest);
 #define TCP_QLEN_DEBUG   LWIP_DBG_OFF
 #define TCP_RST_DEBUG    LWIP_DBG_OFF
 
+#if 0
 extern unsigned char debug_flags;
 #define LWIP_DBG_TYPES_ON debug_flags
+#endif
 
 /* An OS is present */
-#define NO_SYS                     0
+#define NO_SYS                     1
 
 #define LWIP_ETHERNET              1
 #define LWIP_IPV4                  1
@@ -74,7 +81,7 @@ extern unsigned char debug_flags;
 #define LWIP_SO_LINGER              1
 #define SO_REUSE                    1
 #define LWIP_MULTICAST_TX_OPTIONS   1
-#define LWIP_COMPAT_SOCKETS         0 /* TODO */
+#define LWIP_COMPAT_SOCKETS         1
 #define LWIP_SOCKET_OFFSET          1
 #define LWIP_POLL                   1
 #define LWIP_SOCKET_OPEN_COUNT      1
@@ -215,7 +222,7 @@ a lot of data that needs to be copied, this should be set high. */
 /* ---------- DHCP options ---------- */
 /* Define LWIP_DHCP to 1 if you want DHCP configuration of
    interfaces. */
-#define LWIP_DHCP               0
+#define LWIP_DHCP               1
 
 /* ---------- AUTOIP options ------- */
 #define LWIP_AUTOIP             0
